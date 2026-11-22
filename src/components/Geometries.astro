@@ -17,14 +17,14 @@ const items = [
       items.map((g) => (
         <li class:list={['geo__item', g.tested && 'geo__item--on']}>
           <svg viewBox="0 0 160 80" aria-hidden="true">
-            <rect x="4" y="4" width="152" height="72" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.35" />
+            <rect x="4" y="4" width="152" height="72" rx="4" fill="none" stroke="currentColor" stroke-opacity="0.35" />
             {g.id === 'straight' && [18, 29, 40, 51, 62].map((y) => <line x1="18" y1={y} x2="142" y2={y} stroke="currentColor" stroke-width="3" stroke-linecap="round" />)}
             {g.id === 'serpentine' && <path d="M18 18H136a6 6 0 0 1 0 12H24a6 6 0 0 0 0 12H136a6 6 0 0 1 0 12H24a6 6 0 0 0 0 10H142" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />}
             {g.id === 'dense' && [14, 19.8, 25.6, 31.4, 37.2, 43, 48.8, 54.6, 60.4, 66.2].map((y) => <line x1="18" y1={y} x2="142" y2={y} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />)}
             {g.id === 'pin' && pins.map(([x, y]) => <circle cx={x} cy={y} r="2.6" fill="currentColor" />)}
           </svg>
           <p class="geo__name">{g.name}</p>
-          <p class="mono geo__state">{g.tested ? 'Tested, baseline' : 'Designed, not yet tested'}</p>
+          <p class="geo__state">{g.tested ? 'Tested (baseline)' : 'Designed, not yet tested'}</p>
         </li>
       ))
     }
@@ -39,24 +39,16 @@ const items = [
 
   .geo__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
-    gap: 0.75rem;
-    padding: 0;
-    list-style: none;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 1.5rem;
   }
 
   .geo__item {
-    margin: 0;
-    padding: 1rem;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: rgb(5 30 57 / 0.55);
-    color: var(--muted);
+    color: var(--fg-muted);
   }
 
   .geo__item--on {
-    color: var(--cyan);
-    border-color: rgb(92 214 245 / 0.45);
+    color: var(--fg);
   }
 
   .geo__item svg {
@@ -64,21 +56,26 @@ const items = [
     height: auto;
   }
 
+  .geo__item:not(.geo__item--on) svg {
+    opacity: 0.6;
+  }
+
   .geo__name {
     margin-top: 0.7rem;
-    font-weight: 700;
+    font-weight: 650;
     line-height: 1.25;
-    color: var(--text);
+    color: var(--fg);
   }
 
   .geo__state {
     margin-top: 0.3rem;
-    font-size: 0.625rem;
+    font-size: 0.8125rem;
+    color: var(--fg-muted);
   }
 
   figcaption {
-    margin-top: 0.6rem;
+    margin-top: 0.75rem;
     font-size: 0.875rem;
-    color: var(--muted);
+    color: var(--fg-muted);
   }
 </style>

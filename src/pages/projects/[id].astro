@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import Figure from '../../components/Figure.astro';
 import Callout from '../../components/Callout.astro';
 import Finding from '../../components/Finding.astro';
-import Icon from '../../components/Icon.astro';
+import Metrics from '../../components/Metrics.astro';
 import { repoUrl } from '../../site.config.mjs';
 import '../../styles/prose.css';
 
@@ -23,7 +23,9 @@ const { data, id } = entry;
 const { Content, headings } = await render(entry);
 const toc = headings.filter((h) => h.depth === 2);
 const repo = repoUrl(data.repo);
+const repoText = repo?.replace(/^https?:\/\//, '');
 const meta = [
+  { k: 'Status', v: data.statusLabel },
   { k: 'Context', v: data.context },
   { k: 'Period', v: data.period },
   ...(data.role ? [{ k: 'My role', v: data.role }] : []),
@@ -32,54 +34,44 @@ const meta = [
 
 <Base title={data.shortTitle} description={data.summary}>
   <article>
-    <header class="ph">
+    <header class="ph on-navy">
       <div class="wrap">
-        <a class="mono ph__back" href="/#projects"><span class="arrow arrow--back">&larr;</span> All projects</a>
-        <p class="ph__badge"><span class={`badge badge--${data.status}`}>{data.statusLabel}</span></p>
+        <nav class="ph__crumb" aria-label="Breadcrumb"><a href="/#projects">Projects</a></nav>
         <h1 class="ph__title" style={`view-transition-name:title-${id}`}>{data.title}</h1>
         <p class="ph__sum">{data.summary}</p>
         <dl class="ph__meta">
           {
             meta.map((m) => (
               <div>
-                <dt class="mono">{m.k}</dt>
+                <dt>{m.k}</dt>
                 <dd>{m.v}</dd>
               </div>
             ))
           }
           {
             data.tools.length > 0 && (
-              <div class="ph__tools">
-                <dt class="mono">Tools and methods</dt>
+              <div class="ph__wide">
+                <dt>Tools and methods</dt>
+                <dd>{data.tools.join(', ')}</dd>
+              </div>
+            )
+          }
+          {
+            repo && (
+              <div class="ph__wide">
+                <dt>Repository</dt>
                 <dd>
-                  <ul class="chips">
-                    {data.tools.map((t) => <li class="chip">{t}</li>)}
-                  </ul>
+                  <a href={repo} rel="noopener">{repoText}</a>
                 </dd>
               </div>
             )
           }
         </dl>
         {
-          repo && (
-            <p class="ph__repo">
-              <a class="btn" href={repo} rel="noopener"><Icon name="github" />Repository</a>
-            </p>
-          )
-        }
-        {
           data.metrics.length > 0 && (
-            <dl class="ph__metrics">
-              {data.metrics.map((m) => (
-                <div>
-                  <dd class="num">
-                    {m.value}
-                    {m.unit && <span>{m.unit}</span>}
-                  </dd>
-                  <dt>{m.label}</dt>
-                </div>
-              ))}
-            </dl>
+            <div class="ph__metrics">
+              <Metrics items={data.metrics} label="Key figures" />
+            </div>
           )
         }
       </div>
@@ -89,7 +81,7 @@ const meta = [
       {
         toc.length > 1 && (
           <nav class="toc" aria-label="On this page">
-            <p class="mono toc__h">On this page</p>
+            <p class="toc__h">On this page</p>
             <ol>
               {toc.map((h) => (
                 <li>
@@ -106,136 +98,71 @@ const meta = [
     </div>
 
     <nav class="wrap pn" aria-label="More projects">
-      {
-        prev ? (
-          <a class="pn__a" href={`/projects/${prev.id}/`}>
-            <span class="mono">&larr; Previous</span>
-            <span class="pn__t">{prev.data.shortTitle}</span>
-          </a>
-        ) : (
-          <span />
-        )
-      }
-      {
-        next && (
-          <a class="pn__a pn__a--next" href={`/projects/${next.id}/`}>
-            <span class="mono">Next &rarr;</span>
-            <span class="pn__t">{next.data.shortTitle}</span>
-          </a>
-        )
-      }
+      {prev ? <a href={`/projects/${prev.id}/`}>Previous: {prev.data.shortTitle}</a> : <span />}
+      {next && <a class="pn__next" href={`/projects/${next.id}/`}>Next: {next.data.shortTitle}</a>}
     </nav>
   </article>
 </Base>
 
 <style>
   .ph {
-    padding-block: clamp(2rem, 5vw, 3.5rem) clamp(2rem, 4vw, 3rem);
-    border-bottom: 1px solid var(--line);
-    background: radial-gradient(56rem 30rem at 92% -20%, rgb(0 76 151 / 0.3), transparent 70%);
+    padding-block: clamp(2rem, 5vw, 3.5rem) clamp(2.25rem, 4vw, 3.25rem);
   }
 
-  .ph__back {
-    display: inline-block;
-    padding-block: 0.4rem;
-    color: var(--muted);
-    text-decoration: none;
-  }
-
-  .ph__back:hover .arrow--back {
-    transform: translateX(-4px);
-  }
-
-  .ph__badge {
-    margin-top: 1.6rem;
+  .ph__crumb {
+    font-size: 0.9375rem;
+    color: var(--fg-muted);
   }
 
   .ph__title {
-    margin-top: 1rem;
-    max-width: 22ch;
-    font-size: clamp(2rem, 5.4vw, 3.9rem);
-    font-weight: 820;
-    font-stretch: 120%;
-    line-height: 0.98;
-    letter-spacing: -0.03em;
+    max-width: 24ch;
+    margin-top: 1.5rem;
+    font-size: clamp(2rem, 4.6vw, 3.25rem);
+    font-weight: 800;
+    font-stretch: 118%;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
   }
 
   .ph__sum {
-    margin-top: 1.3rem;
     max-width: 62ch;
-    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+    margin-top: 1.25rem;
+    font-size: 1.2rem;
     line-height: 1.45;
-    color: #c9d6e3;
+    color: var(--fg);
   }
 
   .ph__meta {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-    gap: 1.2rem 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 1.1rem 2rem;
     margin: 2rem 0 0;
-    padding-top: 1.3rem;
+    padding-top: 1.25rem;
     border-top: 1px solid var(--line);
   }
 
   .ph__meta dt {
-    color: var(--gold);
-    font-size: 0.6875rem;
+    font-size: 0.875rem;
+    font-weight: 650;
+    color: var(--fg-muted);
   }
 
   .ph__meta dd {
-    margin: 0.3rem 0 0;
-    font-size: 0.95rem;
+    margin: 0.2rem 0 0;
+    font-size: 0.9375rem;
   }
 
-  .ph__tools {
+  .ph__wide {
     grid-column: 1 / -1;
   }
 
-  .ph__tools dd {
-    margin-top: 0.5rem;
-  }
-
-  .ph__repo {
-    margin-top: 1.6rem;
+  .ph__wide dd {
+    max-width: 70ch;
   }
 
   .ph__metrics {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
-    margin: 2.2rem 0 0;
-    border-top: 1px solid var(--line-strong);
-  }
-
-  .ph__metrics div {
-    padding: 1.2rem 1.25rem 0 0;
-  }
-
-  .ph__metrics dd {
-    margin: 0;
-    font-size: clamp(1.6rem, 2.7vw, 2.15rem);
-    font-weight: 850;
-    font-stretch: 122%;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    white-space: nowrap;
-    color: var(--gold-light);
-  }
-
-  .ph__metrics dd span {
-    margin-left: 0.35em;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    font-weight: 500;
-    letter-spacing: 0;
-    color: var(--muted);
-  }
-
-  .ph__metrics dt {
-    margin-top: 0.55rem;
-    max-width: 28ch;
-    font-size: 0.875rem;
-    line-height: 1.4;
-    color: var(--muted);
+    max-width: 44rem;
+    margin-top: 2rem;
   }
 
   .pb {
@@ -257,8 +184,10 @@ const meta = [
   }
 
   .toc__h {
-    color: var(--gold);
     margin-bottom: 0.7rem;
+    font-size: 0.875rem;
+    font-weight: 650;
+    color: var(--fg-muted);
   }
 
   .toc ol {
@@ -271,56 +200,29 @@ const meta = [
     padding: 0.35rem 0 0.35rem 1rem;
     margin-left: -1px;
     border-left: 1px solid transparent;
-    font-size: 0.9rem;
+    font-size: 0.9375rem;
     line-height: 1.35;
-    color: var(--muted);
+    color: var(--fg-muted);
     text-decoration: none;
   }
 
   .toc a:hover {
-    color: var(--text);
-    border-left-color: var(--gold);
+    color: var(--fg);
+    border-left-color: var(--fg);
   }
 
   .pn {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    padding-block: 0 clamp(3rem, 7vw, 5rem);
+    padding-block: 1.5rem 4rem;
+    border-top: 1px solid var(--line);
+    font-weight: 650;
   }
 
-  .pn__a {
-    display: grid;
-    gap: 0.4rem;
-    padding: 1.2rem 1.3rem;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    text-decoration: none;
-    transition:
-      border-color 0.3s,
-      background-color 0.3s,
-      transform 0.3s var(--ease);
-  }
-
-  .pn__a:hover {
-    border-color: var(--line-strong);
-    background: rgb(10 40 71 / 0.6);
-    transform: translateY(-2px);
-  }
-
-  .pn__a--next {
-    text-align: right;
+  .pn__next {
     grid-column: 2;
-  }
-
-  .pn__a .mono {
-    color: var(--gold);
-  }
-
-  .pn__t {
-    font-weight: 700;
-    font-stretch: 108%;
-    line-height: 1.25;
+    text-align: right;
   }
 
   @media (max-width: 560px) {
@@ -328,8 +230,9 @@ const meta = [
       grid-template-columns: 1fr;
     }
 
-    .pn__a--next {
+    .pn__next {
       grid-column: 1;
+      text-align: left;
     }
 
     .pn > span {

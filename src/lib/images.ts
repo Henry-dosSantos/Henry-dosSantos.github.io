@@ -1,6 +1,6 @@
 import type { ImageMetadata } from 'astro';
 
-// Every image under src/assets/projects/. Figures and card covers look files up
+// Every image under src/assets/projects/. Figures and covers look files up
 // by name, so adding a photo means dropping a file in the right folder.
 const files = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/projects/**/*.{jpg,jpeg,png,webp,avif,gif,svg,JPG,JPEG,PNG,WEBP}',

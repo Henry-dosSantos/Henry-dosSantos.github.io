@@ -1,0 +1,177 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { findImage } from '../lib/images';
+import { repoUrl } from '../site.config.mjs';
+import Metrics from './Metrics.astro';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+  metricsCaption?: string;
+  metricsNote?: string;
+}
+
+const { entry, metricsCaption, metricsNote } = Astro.props;
+const { data, id } = entry;
+// Optional cover: src/assets/projects/<id>/cover.(jpg|png|webp). Entries render without one.
+const cover = findImage(`${id}/cover`);
+const repo = repoUrl(data.repo);
+const flagship = data.flagship;
+---
+
+{
+  flagship ? (
+    <article class="pe pe--flag">
+      <h3 class="pe__title" style={`view-transition-name:title-${id}`}>
+        <a href={`/projects/${id}/`}>{data.title}</a>
+      </h3>
+      <p class="pe__meta">
+        <span class="pe__status">{data.statusLabel}</span>
+        <span class="muted">{data.context}</span>
+      </p>
+      {cover && (
+        <Image class="pe__cover" src={cover} alt="" widths={[800, 1200, 1600]} sizes="(min-width: 1120px) 1120px, 100vw" loading="lazy" />
+      )}
+      <div class="pe__cols">
+        <div>
+          <p class="pe__sum">{data.summary}</p>
+          <p class="pe__links">
+            <a href={`/projects/${id}/`}>Read the full write-up</a>
+            {repo && (
+              <a href={repo} rel="noopener">
+                Repository on GitHub
+              </a>
+            )}
+          </p>
+        </div>
+        <div>
+          {data.metrics.length > 0 && <Metrics items={data.metrics} caption={metricsCaption} />}
+          {metricsNote && <p class="pe__note">{metricsNote}</p>}
+        </div>
+      </div>
+    </article>
+  ) : (
+    <li class="pe pe--row">
+      <div>
+        <h3 class="pe__title pe__title--row" style={`view-transition-name:title-${id}`}>
+          <a href={`/projects/${id}/`}>{data.title}</a>
+        </h3>
+        <p class="pe__sum">{data.summary}</p>
+      </div>
+      <div class="pe__side">
+        {cover && <Image class="pe__thumb" src={cover} alt="" widths={[480, 800]} sizes="15rem" loading="lazy" />}
+        <p class="pe__status">{data.statusLabel}</p>
+        <p class="muted">{data.context}</p>
+        {data.tools.length > 0 && <p class="muted pe__tools">{data.tools.join(', ')}</p>}
+      </div>
+    </li>
+  )
+}
+
+<style>
+  .pe__title {
+    font-size: 1.35rem;
+    font-weight: 750;
+    font-stretch: 110%;
+    letter-spacing: -0.01em;
+    width: fit-content;
+  }
+
+  .pe--flag .pe__title {
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+  }
+
+  .pe__title a {
+    text-decoration: none;
+  }
+
+  .pe__title a:hover {
+    text-decoration: underline;
+  }
+
+  .pe__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    margin-top: 0.6rem;
+    font-size: 0.9375rem;
+  }
+
+  .pe__status {
+    font-weight: 650;
+    color: var(--fg);
+  }
+
+  .pe__cover {
+    width: 100%;
+    max-height: 26rem;
+    margin-top: 1.75rem;
+    object-fit: cover;
+    border-radius: var(--r-sm);
+  }
+
+  .pe__cols {
+    display: grid;
+    gap: 2rem 3rem;
+    margin-top: 1.75rem;
+  }
+
+  @media (min-width: 900px) {
+    .pe__cols {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+
+  .pe__sum {
+    max-width: 60ch;
+  }
+
+  .pe__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin-top: 1.25rem;
+    font-weight: 650;
+  }
+
+  .pe__note {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--fg-muted);
+  }
+
+  .pe--row {
+    display: grid;
+    gap: 1.25rem 3rem;
+    padding-block: 1.75rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (min-width: 760px) {
+    .pe--row {
+      grid-template-columns: minmax(0, 1fr) 15rem;
+    }
+  }
+
+  .pe--row .pe__sum {
+    max-width: 62ch;
+    margin-top: 0.6rem;
+  }
+
+  .pe__side {
+    font-size: 0.9375rem;
+  }
+
+  .pe__thumb {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    margin-bottom: 0.75rem;
+    object-fit: cover;
+    border-radius: var(--r-sm);
+  }
+
+  .pe__tools {
+    margin-top: 0.4rem;
+    font-size: 0.875rem;
+  }
+</style>

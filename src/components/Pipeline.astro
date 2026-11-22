@@ -1,10 +1,10 @@
 ---
 // Intended data flow of the optimization tool. Describes the design, not a validated result.
 const steps = [
-  { n: '01', name: 'Generate', text: 'Cold plate geometry: organic, or a family such as pin fin, straight channel, or gyroid.' },
-  { n: '02', name: 'Simulate', text: 'OpenFOAM CFD on each candidate.' },
-  { n: '03', name: 'Optimize', text: 'Pareto front across temperature and pressure drop.' },
-  { n: '04', name: 'Output', text: 'Three designs: temperature-optimized, pressure-optimized, and balanced.' },
+  { name: 'Generate', text: 'Cold plate geometry: organic, or a family such as pin fin, straight channel, or gyroid.' },
+  { name: 'Simulate', text: 'OpenFOAM CFD on each candidate.' },
+  { name: 'Optimize', text: 'Pareto front across temperature and pressure drop.' },
+  { name: 'Output', text: 'Three designs: temperature-optimized, pressure-optimized, and balanced.' },
 ];
 ---
 
@@ -12,10 +12,8 @@ const steps = [
   <ol class="pl__steps">
     {
       steps.map((s) => (
-        <li class="pl__step">
-          <span class="mono pl__n">{s.n}</span>
-          <p class="pl__name">{s.name}</p>
-          <p class="pl__text">{s.text}</p>
+        <li>
+          <strong>{s.name}.</strong> {s.text}
         </li>
       ))
     }
@@ -30,51 +28,19 @@ const steps = [
 
   .pl__steps {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-    gap: 0.75rem;
-    padding: 0;
-    list-style: none;
+    gap: 0.45rem;
+    max-width: var(--measure);
+    padding-left: 1.3rem;
+    list-style: decimal;
   }
 
-  .pl__step {
-    position: relative;
-    margin: 0;
-    padding: 1.1rem 1rem 1.2rem;
-    border: 1px solid var(--line);
-    border-top: 2px solid var(--gold);
-    border-radius: 4px 4px 12px 12px;
-    background: rgb(5 30 57 / 0.55);
-  }
-
-  .pl__step:nth-child(1) {
-    border-top-color: var(--cyan);
-  }
-
-  .pl__step:nth-child(4) {
-    border-top-color: var(--heat);
-  }
-
-  .pl__n {
-    color: var(--gold);
-  }
-
-  .pl__name {
-    margin-top: 0.35rem;
-    font-size: 1.15rem;
-    font-weight: 750;
-    font-stretch: 112%;
-  }
-
-  .pl__text {
-    margin-top: 0.35rem;
-    font-size: 0.9rem;
-    line-height: 1.45;
-    color: var(--muted);
+  .pl__steps li::marker {
+    color: var(--fg-muted);
   }
 
   figcaption {
-    margin-top: 0.6rem;
+    margin-top: 0.75rem;
     font-size: 0.875rem;
-    color: var(--muted);
+    color: var(--fg-muted);
   }
 </style>

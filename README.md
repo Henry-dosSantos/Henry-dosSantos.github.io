@@ -10,7 +10,7 @@ Static site built with [Astro](https://astro.build). Every push to `main` builds
 | --- | --- |
 | Name, email, links, GPA, resume button | `src/site.config.mjs` |
 | Experience, education, skills, side builds | `src/data/profile.ts` |
-| A project page and its home page card | `src/content/projects/<project>.mdx` |
+| A project page and its home page entry | `src/content/projects/<project>.mdx` |
 | Photos, plots, renders | `src/assets/projects/<project>/` (see `ASSETS.md`) |
 | Colors, type, motion | `src/styles/global.css` |
 | Home page layout | `src/pages/index.astro` |
@@ -18,9 +18,9 @@ Static site built with [Astro](https://astro.build). Every push to `main` builds
 ## Add a project
 
 1. Copy an existing file in `src/content/projects/` and rename it. The file name becomes the URL: `my-project.mdx` is served at `/projects/my-project/`.
-2. Edit the block between the `---` lines at the top: `title`, `shortTitle`, `summary`, `status` (`active`, `progress`, `dev`, or `complete`), `statusLabel`, `order` (lower shows first), `context`, `period`, `tools`, and `metrics`.
+2. Edit the block between the `---` lines at the top: `title`, `shortTitle`, `summary`, `status` (`active`, `progress`, `dev`, or `complete`), `statusLabel`, `order` (lower shows first), `context`, `period`, `tools`, and optionally `metrics`. `metrics` is shown as a results table, so add it only for measured values.
 3. Write the body in Markdown under it. `## Heading` lines become the page sections and the "On this page" list.
-4. Commit and push. The card on the home page and the project page are both generated from that one file.
+4. Commit and push. The entry on the home page and the project page are both generated from that one file.
 
 Three building blocks are available in the body without any import:
 
@@ -31,16 +31,16 @@ Three building blocks are available in the body without any import:
   - Something not yet tested.
 </Callout>
 
-<Finding n="01" title="Short statement of what you found">
+<Finding title="Short statement of what you found">
   One or two sentences on what the data showed and what you did about it.
 </Finding>
 ```
 
 ## Add a photo or plot
 
-Drop the file into `src/assets/projects/<project>/` with the name the figure expects, then push. `<Figure src="my-project/bench-photo" />` looks for `src/assets/projects/my-project/bench-photo.jpg` (or `.png`, `.webp`). Until the file exists the page shows a labeled "pending" frame. Images are resized and compressed at build time, so upload the full-resolution original.
+Drop the file into `src/assets/projects/<project>/` with the name the figure expects, then push. `<Figure src="my-project/bench-photo" />` looks for `src/assets/projects/my-project/bench-photo.jpg` (or `.png`, `.webp`). Until the file exists the page shows a short labeled note ("Plot pending." followed by what the figure shows). A figure marked `hold` shows "withheld" instead; a bare `hold` is enough, and a string adds the reason. Images are resized and compressed at build time, so upload the full-resolution original.
 
-A file named `cover.jpg` in a project folder becomes that project's image on the home page card.
+A file named `cover.jpg` in a project folder becomes that project's image on the home page.
 
 `ASSETS.md` lists every file the site is currently waiting for.
 

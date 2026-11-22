@@ -4,7 +4,7 @@ import { site, githubUser } from '../site.config.mjs';
 const year = new Date().getFullYear();
 ---
 
-<footer class="ftr">
+<footer class="ftr on-navy">
   <div class="wrap ftr__in">
     <p>&copy; {year} {site.name}</p>
     <ul class="ftr__links">
@@ -19,11 +19,9 @@ const year = new Date().getFullYear();
 
 <style>
   .ftr {
-    border-top: 1px solid var(--line);
     padding-block: 2rem 2.5rem;
     font-size: 0.875rem;
-    color: var(--muted);
-    background: var(--ink);
+    color: var(--fg-muted);
   }
 
   .ftr__in {

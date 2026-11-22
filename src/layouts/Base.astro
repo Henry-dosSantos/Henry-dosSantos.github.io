@@ -35,7 +35,7 @@ const person = {
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="author" content={site.name} />
-    <meta name="theme-color" content="#020d1a" />
+    <meta name="theme-color" content="#051e39" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -62,22 +62,5 @@ const person = {
       <slot />
     </main>
     <Footer />
-
-    <script>
-      // Card spotlight follows the pointer. Skipped on touch devices and for reduced motion.
-      if (matchMedia('(hover: hover) and (prefers-reduced-motion: no-preference)').matches) {
-        document.addEventListener(
-          'pointermove',
-          (e) => {
-            const card = e.target instanceof Element ? e.target.closest('.card') : null;
-            if (!(card instanceof HTMLElement)) return;
-            const r = card.getBoundingClientRect();
-            card.style.setProperty('--mx', `${e.clientX - r.left}px`);
-            card.style.setProperty('--my', `${e.clientY - r.top}px`);
-          },
-          { passive: true },
-        );
-      }
-    </script>
   </body>
 </html>

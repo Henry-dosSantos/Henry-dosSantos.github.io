@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import ChannelSchematic from '../components/ChannelSchematic.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import ProjectEntry from '../components/ProjectEntry.astro';
 import Icon from '../components/Icon.astro';
 import { site } from '../site.config.mjs';
 import { experience, education, focus, skills, sideBuilds } from '../data/profile';
@@ -11,87 +11,62 @@ const projects = (await getCollection('projects', ({ data }) => !data.draft)).so
   (a, b) => a.data.order - b.data.order,
 );
 const flagship = projects.find((p) => p.data.flagship);
+const others = projects.filter((p) => p !== flagship);
 ---
 
 <Base>
-  <section class="hero">
-    <div class="wrap hero__grid">
+  <section class="hero on-navy">
+    <div class="wrap">
+      <h1 class="hero__name">Henry dos&nbsp;Santos</h1>
+      <div class="hero__grid">
       <div class="hero__text">
-        <p class="mono hero__kicker rise" style="--i:0">
-          Mechanical Engineering <i>/</i> Georgia Tech <i>/</i> BSME May 2029
+        <p class="hero__lead">I design, build, and test liquid cooling hardware for high-heat-flux electronics.</p>
+        <p class="hero__sub">
+          Mechanical engineering student at Georgia Tech (BSME, expected May 2029) and GT-STAR Fellow in Prof.
+          Yogendra Joshi's METTL lab. I'm looking for a thermal or mechanical engineering internship.
         </p>
-        <h1 class="hero__name rise" style="--i:1">Henry <span>dos Santos</span></h1>
-        <p class="hero__lead rise" style="--i:2">
-          I design, build, and test liquid cooling hardware for high-heat-flux electronics.
-        </p>
-        <p class="hero__sub rise" style="--i:3">
-          GT-STAR Fellow in Prof. Yogendra Joshi's METTL lab at Georgia Tech. Cold plates, conjugate heat
-          transfer CFD, and instrumented test loops with stated uncertainty.
-        </p>
-        <div class="hero__cta rise" style="--i:4">
-          <a class="btn btn--primary" href="#projects">See the work <span class="arrow">&darr;</span></a>
-          <a class="btn" href={`mailto:${site.email}`}><Icon name="mail" />Email</a>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href={`mailto:${site.email}`}><Icon name="mail" />Email me</a>
           <a class="btn" href={site.linkedin} rel="me noopener"><Icon name="linkedin" />LinkedIn</a>
           <a class="btn" href={site.github} rel="me noopener"><Icon name="github" />GitHub</a>
           {
             site.resume && (
-              <a class="btn" href="/Henry-dos-Santos-Resume.pdf"><Icon name="file" />Resume</a>
+              <a class="btn" href="/Henry-dos-Santos-Resume.pdf"><Icon name="file" />Resume (PDF)</a>
             )
           }
         </div>
-        <p class="mono hero__seek rise" style="--i:5">
-          <span class="hero__dot" aria-hidden="true"></span>Seeking thermal and mechanical engineering internships
-        </p>
       </div>
-      <div class="hero__fig rise" style="--i:3">
+      <div class="hero__fig">
         <ChannelSchematic />
       </div>
+      </div>
     </div>
-
-    {
-      flagship && (
-        <div class="wrap stats rise" style="--i:6">
-          <div class="stats__head">
-            <p class="mono">Measured on the straight-channel baseline</p>
-            <a class="mono" href={`/projects/${flagship.id}/`}>Method and limits <span class="arrow">&rarr;</span></a>
-          </div>
-          <dl class="stats__grid">
-            {flagship.data.metrics.map((m) => (
-              <div class="stats__cell">
-                <dd class="num">
-                  {m.value}
-                  {m.unit && <span>{m.unit}</span>}
-                </dd>
-                <dt>{m.label}</dt>
-              </div>
-            ))}
-          </dl>
-          <p class="stats__note">One run per condition (n = 1). Heater power is a setpoint, not a measurement.</p>
-        </div>
-      )
-    }
   </section>
 
-  <section class="section" id="projects" aria-labelledby="projects-h">
+  <section class="section section--projects" id="projects" aria-labelledby="projects-h">
     <div class="wrap">
-      <div class="section__head">
-        <h2 class="section__title" id="projects-h">Projects</h2>
-        <p class="mono muted">{projects.length} projects, most important first</p>
-      </div>
-      <div class="pgrid">
-        {projects.map((entry, i) => <ProjectCard entry={entry} index={i} />)}
-      </div>
+      <h2 id="projects-h">Projects</h2>
+      {
+        flagship && (
+          <ProjectEntry
+            entry={flagship}
+            metricsCaption="Measured on the straight-channel baseline"
+            metricsNote="One run per condition (n = 1). Heater power is a setpoint, not a measurement."
+          />
+        )
+      }
+      <ul class="pj-list">
+        {others.map((entry) => <ProjectEntry entry={entry} />)}
+      </ul>
 
-      <h3 class="mono side__h">Side builds</h3>
+      <h3 class="side__h">Side builds</h3>
       <ul class="side">
         {
           sideBuilds.map((s) => (
-            <li class="side__item reveal">
-              <div>
-                <p class="side__title">{s.title}</p>
-                <p class="side__text">{s.text}</p>
-              </div>
-              <span class="chip">{s.tag}</span>
+            <li>
+              <p>
+                <strong>{s.title}.</strong> {s.text} <span class="muted">{s.tag}.</span>
+              </p>
             </li>
           ))
         }
@@ -99,18 +74,15 @@ const flagship = projects.find((p) => p.data.flagship);
     </div>
   </section>
 
-  <section class="section paper" id="experience" aria-labelledby="experience-h">
+  <section class="section section--exp on-tint" id="experience" aria-labelledby="experience-h">
     <div class="wrap">
-      <div class="section__head">
-        <h2 class="section__title" id="experience-h">Experience</h2>
-        <p class="mono">Research, leadership, teaching</p>
-      </div>
+      <h2 id="experience-h">Experience</h2>
       <div class="exp">
         <ol class="exp__list">
           {
             experience.map((e) => (
-              <li class="exp__item reveal">
-                <p class="mono exp__when">{e.period}</p>
+              <li class="exp__item">
+                <p class="exp__when num">{e.period}</p>
                 <div>
                   <h3 class="exp__role">{e.role}</h3>
                   <p class="exp__org">{e.org}</p>
@@ -125,14 +97,14 @@ const flagship = projects.find((p) => p.data.flagship);
             ))
           }
         </ol>
-        <aside class="edu reveal" aria-labelledby="edu-h">
-          <h3 class="mono" id="edu-h">Education</h3>
+        <aside class="edu" aria-labelledby="edu-h">
+          <h3 id="edu-h">Education</h3>
           <p class="edu__school">{education.school}</p>
           <p>{education.degree}</p>
           <p>{education.expected}</p>
           <dl class="edu__dl">
             <div>
-              <dt class="mono">Georgia Tech GPA</dt>
+              <dt>Georgia Tech GPA</dt>
               <dd>
                 {
                   site.gpa ? (
@@ -144,15 +116,15 @@ const flagship = projects.find((p) => p.data.flagship);
               </dd>
             </div>
             <div>
-              <dt class="mono">Transfer</dt>
+              <dt>Transfer</dt>
               <dd>{education.transfer}</dd>
             </div>
             <div>
-              <dt class="mono">Affiliations</dt>
+              <dt>Affiliations</dt>
               <dd>{education.affiliations.join(', ')}</dd>
             </div>
             <div>
-              <dt class="mono">Focus</dt>
+              <dt>Focus</dt>
               <dd>{focus.primary} {focus.open}</dd>
             </div>
           </dl>
@@ -161,22 +133,15 @@ const flagship = projects.find((p) => p.data.flagship);
     </div>
   </section>
 
-  <section class="section" id="skills" aria-labelledby="skills-h">
+  <section class="section section--skills" id="skills" aria-labelledby="skills-h">
     <div class="wrap">
-      <div class="section__head">
-        <h2 class="section__title" id="skills-h">Skills</h2>
-        <p class="mono muted">Analysis, simulation, build, measure</p>
-      </div>
+      <h2 id="skills-h">Skills</h2>
       <dl class="sk">
         {
           skills.map((s) => (
-            <div class="sk__row reveal">
-              <dt class="mono">{s.group}</dt>
-              <dd>
-                <ul>
-                  {s.items.map((it) => <li>{it}</li>)}
-                </ul>
-              </dd>
+            <div class="sk__row">
+              <dt>{s.group}</dt>
+              <dd>{s.items.join(', ')}</dd>
             </div>
           ))
         }
@@ -184,279 +149,98 @@ const flagship = projects.find((p) => p.data.flagship);
     </div>
   </section>
 
-  <section class="contact" id="contact" aria-labelledby="contact-h">
-    <div class="wrap contact__in">
-      <h2 class="section__title" id="contact-h">Contact</h2>
+  <section class="contact on-gold" id="contact" aria-labelledby="contact-h">
+    <div class="wrap">
+      <h2 id="contact-h">Contact</h2>
       <p class="contact__lead">For internship opportunities, or technical questions about any project here, email me.</p>
       <a class="contact__mail" href={`mailto:${site.email}`}>{site.email}</a>
-      <div class="contact__links">
-        <a class="btn" href={site.linkedin} rel="me noopener"><Icon name="linkedin" />linkedin.com/in/henry-dossantos</a>
-        <a class="btn" href={site.github} rel="me noopener"><Icon name="github" />GitHub profile</a>
-        {
-          site.resume && (
-            <a class="btn" href="/Henry-dos-Santos-Resume.pdf"><Icon name="file" />Resume (PDF)</a>
-          )
-        }
-      </div>
+      <p class="contact__links">
+        <a href={site.linkedin} rel="me noopener">linkedin.com/in/henry-dossantos</a>
+        <a href={site.github} rel="me noopener">github.com/Henry-dosSantos</a>
+        {site.resume && <a href="/Henry-dos-Santos-Resume.pdf">Resume (PDF)</a>}
+      </p>
     </div>
   </section>
 </Base>
 
 <style>
-  /* Hero */
   .hero {
-    position: relative;
-    padding-block: clamp(3rem, 7vw, 5.5rem) clamp(2.5rem, 5vw, 4rem);
-    background:
-      radial-gradient(60rem 34rem at 88% -10%, rgb(0 76 151 / 0.34), transparent 70%),
-      radial-gradient(40rem 26rem at -10% 110%, rgb(179 144 81 / 0.12), transparent 70%);
+    padding-block: clamp(3.5rem, 8vw, 6rem) clamp(3.5rem, 7vw, 5.5rem);
   }
 
   .hero__grid {
     display: grid;
     gap: clamp(2rem, 5vw, 4rem);
-    align-items: center;
+    align-items: start;
+    margin-top: clamp(1.75rem, 4vw, 2.75rem);
   }
 
   @media (min-width: 980px) {
     .hero__grid {
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     }
   }
 
-  .hero__text {
-    container-type: inline-size;
-  }
-
-  .hero__kicker {
-    color: var(--gold);
-  }
-
-  .hero__kicker i {
-    font-style: normal;
-    color: var(--line-strong);
-    margin-inline: 0.35em;
-  }
-
   .hero__name {
-    margin-top: 1.1rem;
-    font-size: clamp(2.2rem, 11.6cqi, 5.4rem);
-    font-weight: 850;
-    font-stretch: 125%;
-    line-height: 0.92;
-    letter-spacing: -0.035em;
-    text-transform: uppercase;
-  }
-
-  .hero__name span {
-    display: block;
-    color: var(--gold);
-    white-space: nowrap;
+    font-size: clamp(2.6rem, 7.5vw, 4.75rem);
+    font-weight: 800;
+    font-stretch: 122%;
+    line-height: 1;
+    letter-spacing: -0.03em;
   }
 
   .hero__lead {
-    margin-top: 1.6rem;
-    max-width: 34ch;
+    max-width: 30ch;
+    margin-top: 0;
     text-wrap: balance;
-    font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
     font-weight: 600;
-    line-height: 1.25;
-    letter-spacing: -0.01em;
+    line-height: 1.3;
   }
 
   .hero__sub {
+    max-width: 56ch;
     margin-top: 1rem;
-    max-width: 54ch;
-    color: var(--muted);
+    color: var(--fg-muted);
   }
 
   .hero__cta {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-    margin-top: 1.9rem;
+    margin-top: 2rem;
   }
 
-  .hero__seek {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-top: 1.5rem;
-    color: var(--muted);
-    font-size: 0.6875rem;
+  .section--projects {
+    padding-block: clamp(4rem, 8vw, 6.5rem);
   }
 
-  .hero__dot {
-    width: 8px;
-    height: 8px;
-    flex: none;
-    border-radius: 50%;
-    background: var(--cyan);
-    box-shadow: 0 0 0 4px rgb(92 214 245 / 0.18);
+  .section--exp {
+    padding-block: clamp(3.5rem, 7vw, 5.5rem);
   }
 
-  /* Measured-results strip */
-  .stats {
-    margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  .section--skills {
+    padding-block: clamp(3rem, 6vw, 4.5rem);
   }
 
-  .stats__head {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.5rem 1.5rem;
-    padding-bottom: 0.8rem;
-    color: var(--muted);
-  }
-
-  .stats__head a {
-    color: var(--gold-light);
-    text-decoration: none;
-  }
-
-  .stats__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
-    margin: 0;
-    border-top: 1px solid var(--line-strong);
-    border-bottom: 1px solid var(--line);
-  }
-
-  @media (min-width: 560px) and (max-width: 1099px) {
-    .stats__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .stats__cell {
-    padding: 1.3rem 1.25rem 1.4rem 0;
-  }
-
-  .stats__cell dd {
-    margin: 0;
-    font-size: clamp(1.6rem, 2.7vw, 2.15rem);
-    font-weight: 850;
-    font-stretch: 122%;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    white-space: nowrap;
-    background: var(--thermal);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .stats__cell dd span {
-    margin-left: 0.35em;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    font-weight: 500;
-    letter-spacing: 0;
-    color: var(--muted);
-  }
-
-  .stats__cell dt {
-    margin-top: 0.6rem;
-    max-width: 26ch;
-    font-size: 0.875rem;
-    line-height: 1.4;
-    color: var(--muted);
-  }
-
-  .stats__note {
-    margin-top: 0.8rem;
-    font-size: 0.8125rem;
-    color: var(--muted);
-  }
-
-  /* Projects */
-  .pgrid {
-    display: grid;
-    gap: 1rem;
-  }
-
-  @media (min-width: 900px) {
-    .pgrid {
-      grid-template-columns: repeat(6, 1fr);
-    }
-
-    .pgrid > :global(*) {
-      grid-column: span 2;
-    }
-
-    .pgrid > :global(.pc--flag) {
-      grid-column: 1 / -1;
-    }
-
-    /* A lone card or pair in the last row fills the width instead of leaving a gap. */
-    .pgrid > :global(:nth-child(3n + 2):last-child) {
-      grid-column: 1 / -1;
-    }
-
-    .pgrid > :global(:nth-child(3n + 2):nth-last-child(2)),
-    .pgrid > :global(:nth-child(3n + 3):last-child) {
-      grid-column: span 3;
-    }
+  .pj-list {
+    margin-top: 3rem;
   }
 
   .side__h {
-    margin-top: 3rem;
-    color: var(--gold);
-    font-stretch: 100%;
+    margin-top: 3.5rem;
+    font-size: 1.15rem;
+    font-weight: 750;
   }
 
   .side {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    gap: 0 2.5rem;
     margin-top: 0.9rem;
+  }
+
+  .side li {
+    max-width: 75ch;
+    padding-block: 0.9rem;
     border-top: 1px solid var(--line);
-  }
-
-  .side__item {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1.1rem 0;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .side__title {
-    font-weight: 700;
-  }
-
-  .side__text {
-    margin-top: 0.2rem;
-    font-size: 0.95rem;
-    color: var(--muted);
-  }
-
-  /* Experience: light band for contrast */
-  .paper {
-    --line: rgb(5 30 57 / 0.16);
-    --line-strong: rgb(5 30 57 / 0.4);
-    --muted: var(--slate);
-    background: var(--paper);
-    color: var(--navy);
-    color-scheme: light;
-  }
-
-  .paper ::selection {
-    background: var(--navy);
-    color: var(--paper);
-  }
-
-  .paper a:hover {
-    color: var(--heat-deep);
-  }
-
-  .paper :focus-visible {
-    outline-color: var(--navy);
-  }
-
-  .paper .section__head .mono {
-    color: var(--gold-deep);
   }
 
   .exp {
@@ -489,15 +273,9 @@ const flagship = projects.find((p) => p.data.flagship);
   }
 
   .exp__when {
-    color: var(--gold-deep);
-    padding-top: 0.35rem;
-    font-size: 0.6875rem;
-  }
-
-  .exp__role {
-    font-size: 1.3rem;
-    font-stretch: 108%;
-    line-height: 1.2;
+    padding-top: 0.3rem;
+    font-size: 0.9375rem;
+    color: var(--fg-muted);
   }
 
   .exp__org {
@@ -506,37 +284,27 @@ const flagship = projects.find((p) => p.data.flagship);
   }
 
   .exp__detail {
-    font-size: 0.95rem;
-    color: var(--muted);
+    font-size: 0.9375rem;
+    color: var(--fg-muted);
   }
 
   .exp__pts {
     margin-top: 0.7rem;
-    display: grid;
-    gap: 0.35rem;
+    padding-left: 1.2rem;
+    list-style: disc;
   }
 
   .exp__pts li {
-    position: relative;
-    padding-left: 1.1rem;
-    color: #1d3450;
+    padding-block: 0.15rem;
   }
 
-  .exp__pts li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.72em;
-    width: 0.5rem;
-    height: 2px;
-    background: var(--gold-dark);
+  .exp__pts li::marker {
+    color: var(--fg-muted);
   }
 
   .edu {
-    padding: 1.6rem;
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius);
-    background: #fff;
+    padding-top: 1.25rem;
+    border-top: 2px solid var(--fg);
   }
 
   @media (min-width: 980px) {
@@ -546,17 +314,11 @@ const flagship = projects.find((p) => p.data.flagship);
     }
   }
 
-  .edu > .mono {
-    color: var(--gold-deep);
-    font-stretch: 100%;
-  }
-
   .edu__school {
     margin-top: 0.7rem;
-    font-size: 1.3rem;
-    font-weight: 800;
-    font-stretch: 108%;
-    line-height: 1.2;
+    font-size: 1.15rem;
+    font-weight: 750;
+    line-height: 1.25;
   }
 
   .edu__dl {
@@ -575,132 +337,73 @@ const flagship = projects.find((p) => p.data.flagship);
   }
 
   .edu__dl dt {
-    font-size: 0.6875rem;
-    color: var(--gold-deep);
+    font-size: 0.875rem;
+    font-weight: 650;
+    color: var(--fg-muted);
   }
 
   .edu__dl dd {
     margin: 0.2rem 0 0;
-    font-size: 0.95rem;
+    font-size: 0.9375rem;
   }
 
   .edu__pending {
-    display: inline-block;
-    padding: 0.15rem 0.55rem;
-    border: 1px dashed var(--heat-deep);
-    border-radius: 6px;
-    color: var(--heat-deep);
-    font-weight: 600;
+    font-weight: 650;
+    color: var(--heat);
   }
 
-  /* Skills */
   .sk {
     margin: 0;
   }
 
   .sk__row {
     display: grid;
-    gap: 0.5rem 2rem;
-    padding: 1.35rem 0;
-    border-bottom: 1px solid var(--line);
-    transition: background-color 0.3s;
-  }
-
-  .sk__row:first-child {
-    padding-top: 0;
+    gap: 0.25rem 2rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
   }
 
   @media (min-width: 760px) {
     .sk__row {
-      grid-template-columns: 15rem 1fr;
-      align-items: baseline;
+      grid-template-columns: 14rem 1fr;
     }
   }
 
   .sk__row dt {
-    color: var(--gold);
+    font-weight: 650;
   }
 
   .sk__row dd {
     margin: 0;
   }
 
-  .sk__row ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem 1.7rem;
-    font-size: clamp(1.1rem, 2vw, 1.4rem);
-    font-weight: 600;
-    font-stretch: 106%;
-    line-height: 1.3;
-  }
-
-  .sk__row li {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6em;
-  }
-
-  .sk__row li::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    flex: none;
-    background: var(--gold);
-  }
-
-  /* Contact: Georgia Tech gold gradient with dark text */
   .contact {
-    --line-strong: rgb(2 13 26 / 0.55);
-    padding-block: clamp(4rem, 9vw, 7rem);
-    background: linear-gradient(100deg, #b39051, #debd88 62%, #b39051);
-    color: var(--ink);
-    color-scheme: light;
-  }
-
-  .contact :focus-visible {
-    outline-color: var(--ink);
+    padding-block: clamp(3.5rem, 7vw, 5.5rem);
   }
 
   .contact__lead {
-    margin-top: 1rem;
     max-width: 44ch;
+    margin-top: 1rem;
     font-size: 1.15rem;
     font-weight: 500;
   }
 
   .contact__mail {
     display: inline-block;
-    margin-top: 1.6rem;
-    font-size: clamp(1.3rem, 5.2vw, 3.2rem);
+    margin-top: 1.5rem;
+    font-size: clamp(1.4rem, 4.4vw, 2.6rem);
     font-weight: 800;
     font-stretch: 112%;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
     line-height: 1.1;
     overflow-wrap: anywhere;
-    text-decoration-color: rgb(2 13 26 / 0.4);
     text-decoration-thickness: 2px;
-  }
-
-  .contact__mail:hover {
-    color: var(--ink);
-    text-decoration-color: var(--ink);
   }
 
   .contact__links {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-top: 1.8rem;
-  }
-
-  .contact .btn {
-    border-color: rgb(2 13 26 / 0.55);
-  }
-
-  .contact .btn:hover {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: var(--gold-light);
+    gap: 0.5rem 2rem;
+    margin-top: 1.75rem;
   }
 </style>

@@ -1,7 +1,7 @@
 ---
 title: Liquid-Cooled Cold Plate Thermal Validation Testbed
 shortTitle: Cold Plate Testbed
-summary: Closed-loop test rig that compares cold plate channel geometries for high-heat-flux electronics on one copper base. The straight-channel baseline is tested. Three more geometries are designed and waiting on test.
+summary: Closed-loop test rig that compares cold plate channel geometries for high-heat-flux electronics on one copper base. The straight-channel baseline is tested. 3 more geometries are designed and waiting on test.
 status: active
 statusLabel: Ongoing, baseline tested
 order: 1
@@ -36,7 +36,7 @@ import Geometries from '../../components/Geometries.astro';
 
 ## Purpose
 
-The testbed compares four cold plate channel geometries for high-heat-flux electronics on the same copper base, coolant loop, and instrumentation: straight, serpentine, high-density multi-channel, and pin-fin. The channel bodies are interchangeable 3D-printed parts, so each geometry runs on the same base.
+The testbed compares 4 cold plate channel geometries for high-heat-flux electronics on the same copper base, coolant loop, and instrumentation: straight, serpentine, high-density multi-channel, and pin-fin. The channel bodies are interchangeable 3D-printed parts, so each geometry runs on the same base.
 
 <Geometries />
 
@@ -88,7 +88,7 @@ The testbed compares four cold plate channel geometries for high-heat-flux elect
 
 <p class="eq">D<sub>h</sub> = 4A / P = 4(3 × 5) / (2(3 + 5)) = 3.75 mm</p>
 
-**Result.** Thermal resistance stayed between 0.36 and 0.37 K/W at all four power levels, a spread of 3.3%. At a fixed geometry and flow rate, thermal resistance should not depend on power, so a flat result is a consistency check on the rig and not a performance claim.
+Thermal resistance stayed between 0.36 and 0.37 K/W at all four power levels, a spread of 3.3%. At a fixed geometry and flow rate, thermal resistance should not depend on power, so a flat result is a consistency check on the rig and not a performance claim.
 
 <Figure
   src="cold-plate-testbed/rth-vs-power"
@@ -97,39 +97,39 @@ The testbed compares four cold plate channel geometries for high-heat-flux elect
   caption="Thermal resistance across the power sweep."
 />
 
-<span class="pending">Pending</span> Per-condition values, the thermal resistance definition with thermocouple locations, and the raw logs will be published in the repository.
+<span class="pending">Pending:</span> Per-condition values, the thermal resistance definition with thermocouple locations, and the raw logs will be published in the repository.
 
 ## What the analysis caught
 
-<Finding n="01" title="A 0.187 K thermocouple offset in the energy balance">
+<Finding title="A 0.187 K thermocouple offset in the energy balance">
   Log statistics showed a 0.187 K offset between a thermocouple pair. With that offset corrected, the energy balance closes to about 98 to 105%.
 </Finding>
 
-<Finding n="02" title="My first calibration was circular">
+<Finding title="My first calibration was circular">
   I rejected my own first calibration attempt because it was circular.
 </Finding>
 
-<Finding n="03" title="Entry-region heat transfer: Nu ≈ 9, not 4">
+<Finding title="Entry-region heat transfer: Nu ≈ 9, not 4">
   The channel flow is in the thermal entry region. The Hausen correlation gives Nu ≈ 9. A fully developed value of about 4 would have been the wrong model and would have cut the predicted heat transfer coefficient by more than half.
 </Finding>
 
-<Finding n="04" title="The printed walls do almost nothing as fins">
+<Finding title="The printed walls do almost nothing as fins">
   Fin efficiency is about 0.07 for ASA against about 0.97 for copper. That result is the justification for the copper base.
 </Finding>
 
-<Finding n="05" title="Pressure drop is below sensor resolution">
+<Finding title="Pressure drop is below sensor resolution">
   The measured pressure drop is below the resolution of the differential pressure sensor. I report it that way and do not quote a number.
 </Finding>
 
-<Finding n="06" title="Equal flow rate is the wrong basis for comparison">
+<Finding title="Equal flow rate is the wrong basis for comparison">
   Comparing geometries at equal flow rate confounds velocity with geometry. The test plan now compares them at matched pumping power.
 </Finding>
 
-<Finding n="07" title="Uncertainty is stated with the result">
-  Propagated uncertainty on thermal resistance is ±2.8% (k = 1).
+<Finding title="Uncertainty on thermal resistance: ±2.8% (k = 1)">
+  From uncertainty propagation through the thermal resistance calculation.
 </Finding>
 
-<Finding n="08" title="Leaks were root-caused, then fixed">
+<Finding title="Leaks were root-caused, then fixed">
   The leaks came through the printed layer lines and at the gasket. Interior epoxy and RTV fixed them.
 </Finding>
 
@@ -144,7 +144,7 @@ ANSYS Fluent conjugate heat transfer model of the straight-channel plate: half s
   caption="Conjugate heat transfer model, straight channel."
 />
 
-<span class="pending">Pending</span> Mesh image and the comparison between the model and the measured thermal resistance.
+<span class="pending">Pending:</span> Mesh image and the comparison between the model and the measured thermal resistance.
 
 ## Open items
 
