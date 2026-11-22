@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import { findImage } from '../lib/images';
+
+interface Props {
+  // "<project-id>/<file name without extension>". The file lives in src/assets/projects/.
+  src: string;
+  // Describes the image. Used as alt text, and as the placeholder text until the file exists.
+  alt: string;
+  caption?: string;
+  // Placeholder label, e.g. "Photo", "Plot", "CAD render", "CFD result", "Test data".
+  kind?: string;
+  // If set, the slot is marked as intentionally withheld and shows this reason.
+  hold?: string;
+}
+
+const { src, alt, caption, kind = 'Photo', hold } = Astro.props;
+const image = findImage(src);
+---
+
+<figure class="fig">
+  {
+    image ? (
+      <Image src={image} alt={alt} widths={[480, 800, 1200, 1600]} sizes="(min-width: 900px) 800px, 100vw" loading="lazy" />
+    ) : (
+      <div class:list={['fig__ph', hold && 'fig__ph--hold']} role="img" aria-label={`${kind} ${hold ? 'withheld' : 'pending'}: ${alt}`}>
+        <span class="mono fig__tag">{kind} {hold ? 'withheld' : 'pending'}</span>
+        <span class="fig__desc">{alt}</span>
+        {hold && <span class="fig__why">{hold}</span>}
+        {import.meta.env.DEV && <code class="fig__path">src/assets/projects/{src}.jpg</code>}
+      </div>
+    )
+  }
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .fig {
+    margin: 2rem 0;
+  }
+
+  .fig :global(img) {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--navy);
+  }
+
+  .fig__ph {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 9.5rem;
+    padding: 1.6rem 1.5rem;
+    text-align: center;
+    border: 1px dashed var(--line-strong);
+    border-radius: 12px;
+    background:
+      linear-gradient(rgb(222 189 136 / 0.05) 1px, transparent 1px) 0 0 / 24px 24px,
+      linear-gradient(90deg, rgb(222 189 136 / 0.05) 1px, transparent 1px) 0 0 / 24px 24px,
+      rgb(5 30 57 / 0.5);
+  }
+
+  .fig__tag {
+    padding: 0.25rem 0.6rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 0.6875rem;
+    color: var(--gold-light);
+  }
+
+  .fig__ph--hold .fig__tag {
+    color: var(--heat);
+  }
+
+  .fig__desc {
+    max-width: 46ch;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  .fig__why {
+    max-width: 46ch;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .fig__path {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--cyan);
+  }
+
+  figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+</style>

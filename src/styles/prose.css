@@ -1,0 +1,167 @@
+/* Long-form project write-ups (rendered Markdown / MDX). */
+.prose {
+  counter-reset: h2;
+  min-width: 0;
+}
+
+.prose > * + * {
+  margin-top: 1.1rem;
+}
+
+.prose h2 {
+  counter-increment: h2;
+  margin-top: 3.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line-strong);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-stretch: 118%;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.prose h2:first-child {
+  margin-top: 0;
+}
+
+.prose h2::before {
+  content: counter(h2, decimal-leading-zero);
+  display: block;
+  margin-bottom: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-stretch: 100%;
+  letter-spacing: 0.09em;
+  color: var(--gold);
+}
+
+.prose h3 {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  font-stretch: 106%;
+  line-height: 1.25;
+}
+
+.prose p,
+.prose li {
+  color: #d3deea;
+}
+
+.prose strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.prose a {
+  color: var(--gold-light);
+}
+
+.prose ul:not([class]),
+.prose ol:not([class]) {
+  display: grid;
+  gap: 0.45rem;
+  padding-left: 1.3rem;
+}
+
+.prose ul:not([class]) > li {
+  position: relative;
+}
+
+.prose ul:not([class]) > li::before {
+  content: '';
+  position: absolute;
+  left: -1.3rem;
+  top: 0.72em;
+  width: 0.6rem;
+  height: 2px;
+  background: var(--gold);
+}
+
+.prose ol:not([class]) {
+  list-style: decimal;
+}
+
+.prose ol:not([class]) > li::marker {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  color: var(--gold);
+}
+
+.prose code {
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: rgb(5 30 57 / 0.7);
+}
+
+.prose table {
+  width: 100%;
+  margin-block: 1.6rem;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.prose thead th {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--gold);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.prose th,
+.prose td {
+  padding: 0.65rem 1.5rem 0.65rem 0;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+}
+
+.prose td:first-child {
+  color: var(--text);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.prose td {
+  color: #d3deea;
+}
+
+@media (max-width: 640px) {
+  .prose table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .prose td {
+    min-width: 9rem;
+  }
+
+  .prose td:first-child {
+    white-space: normal;
+  }
+}
+
+.prose .eq {
+  padding: 0.9rem 1.1rem;
+  border-left: 2px solid var(--gold);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  background: rgb(5 30 57 / 0.6);
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.prose .pending {
+  padding: 0.05rem 0.45rem;
+  border: 1px dashed var(--heat);
+  border-radius: 5px;
+  font-size: 0.9em;
+  color: var(--heat);
+  white-space: nowrap;
+}

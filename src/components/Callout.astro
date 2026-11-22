@@ -1,0 +1,40 @@
+---
+interface Props {
+  // "limit" = open item or limitation, "hold" = withheld until a date, "note" = neutral.
+  type?: 'note' | 'limit' | 'hold';
+  title: string;
+}
+
+const { type = 'note', title } = Astro.props;
+---
+
+<aside class:list={['co', `co--${type}`]}>
+  <p class="mono co__title">{title}</p>
+  <div class="co__body"><slot /></div>
+</aside>
+
+<style>
+  .co {
+    --c: var(--gold-light);
+    margin: 2rem 0;
+    padding: 1.1rem 1.3rem 1.2rem;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--c);
+    border-radius: 4px 12px 12px 4px;
+    background: rgb(5 30 57 / 0.6);
+  }
+
+  .co--limit,
+  .co--hold {
+    --c: var(--heat);
+  }
+
+  .co__title {
+    color: var(--c);
+    margin-bottom: 0.5rem;
+  }
+
+  .co__body :global(> * + *) {
+    margin-top: 0.6rem;
+  }
+</style>

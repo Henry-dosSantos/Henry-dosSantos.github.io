@@ -1,0 +1,52 @@
+---
+import { site, githubUser } from '../site.config.mjs';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <p>&copy; {year} {site.name}</p>
+    <ul class="ftr__links">
+      <li><a href={`mailto:${site.email}`}>Email</a></li>
+      <li><a href={site.linkedin} rel="me noopener">LinkedIn</a></li>
+      <li><a href={site.github} rel="me noopener">GitHub</a></li>
+      <li><a href={`${site.github}/${githubUser}.github.io`} rel="noopener">Site source</a></li>
+    </ul>
+    <p class="ftr__note">Personal site. Not an official Georgia Tech publication.</p>
+  </div>
+</footer>
+
+<style>
+  .ftr {
+    border-top: 1px solid var(--line);
+    padding-block: 2rem 2.5rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+    background: var(--ink);
+  }
+
+  .ftr__in {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+  }
+
+  .ftr__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+  }
+
+  .ftr__links a {
+    display: inline-block;
+    padding-block: 0.35rem;
+  }
+
+  .ftr__note {
+    flex-basis: 100%;
+    font-size: 0.8125rem;
+  }
+</style>

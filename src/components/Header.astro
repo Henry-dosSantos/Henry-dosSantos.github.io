@@ -1,0 +1,108 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../site.config.mjs';
+
+const links = [
+  { href: '/#projects', label: 'Projects', sm: true },
+  { href: '/#experience', label: 'Experience', sm: true },
+  { href: '/#skills', label: 'Skills', sm: false },
+  { href: '/#contact', label: 'Contact', sm: true },
+];
+---
+
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="hdr__brand" href="/" aria-label={`${site.name}, home`}>
+      <span class="hdr__mark"><Icon name="mark" /></span>
+      <span class="hdr__name">{site.name}</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="hdr__nav">
+        {
+          links.map((l) => (
+            <li class:list={[!l.sm && 'hdr__lg']}>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--header-h);
+    background: rgb(2 13 26 / 0.78);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--line);
+    view-transition-name: site-header;
+  }
+
+  .hdr__in {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .hdr__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    font-weight: 750;
+    font-stretch: 112%;
+    letter-spacing: -0.01em;
+  }
+
+  .hdr__mark {
+    width: 30px;
+    height: 30px;
+    flex: none;
+    transition: transform 0.5s var(--ease);
+  }
+
+  .hdr__brand:hover .hdr__mark {
+    transform: rotate(-90deg);
+  }
+
+  .hdr__nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.25rem, 1.6vw, 1.1rem);
+  }
+
+  .hdr__nav a {
+    display: inline-block;
+    padding: 0.55rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    background: linear-gradient(var(--gold), var(--gold)) no-repeat 0.5rem calc(100% - 0.3rem) / 0 1.5px;
+    transition:
+      color 0.25s,
+      background-size 0.35s var(--ease);
+  }
+
+  .hdr__nav a:hover {
+    color: var(--text);
+    background-size: calc(100% - 1rem) 1.5px;
+  }
+
+  @media (max-width: 560px) {
+    .hdr__name,
+    .hdr__lg {
+      display: none;
+    }
+  }
+</style>

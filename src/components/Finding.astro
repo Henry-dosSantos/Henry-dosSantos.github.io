@@ -1,0 +1,58 @@
+---
+interface Props {
+  n: string;
+  title: string;
+}
+
+const { n, title } = Astro.props;
+---
+
+<section class="fd">
+  <span class="mono fd__n" aria-hidden="true">{n}</span>
+  <div>
+    <h3 class="fd__title">{title}</h3>
+    <div class="fd__body"><slot /></div>
+  </div>
+</section>
+
+<style>
+  .fd {
+    display: grid;
+    grid-template-columns: 2.6rem 1fr;
+    gap: 0.5rem 1rem;
+    padding: 1.4rem 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .fd:last-of-type {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .fd__n {
+    color: var(--gold);
+    font-size: 0.8125rem;
+    padding-top: 0.3rem;
+  }
+
+  .fd__title {
+    font-size: 1.15rem;
+    font-stretch: 106%;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0 0 0.45rem;
+  }
+
+  .fd__body {
+    color: #c9d6e3;
+  }
+
+  .fd__body :global(> * + *) {
+    margin-top: 0.6rem;
+  }
+
+  @media (max-width: 520px) {
+    .fd {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

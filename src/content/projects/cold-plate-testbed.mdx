@@ -1,0 +1,163 @@
+---
+title: Liquid-Cooled Cold Plate Thermal Validation Testbed
+shortTitle: Cold Plate Testbed
+summary: Closed-loop test rig that compares cold plate channel geometries for high-heat-flux electronics on one copper base. The straight-channel baseline is tested. Three more geometries are designed and waiting on test.
+status: active
+statusLabel: Ongoing, baseline tested
+order: 1
+flagship: true
+context: Self-directed project
+period: Ongoing
+tools:
+  - Thermal resistance analysis
+  - Uncertainty propagation
+  - ANSYS Fluent
+  - Conjugate heat transfer
+  - Arduino Mega DAQ
+  - Type-T thermocouples
+  - FDM 3D printing (ASA)
+metrics:
+  - value: 0.36–0.37
+    unit: K/W
+    label: Thermal resistance across a 40 to 100 W sweep, held within 3.3%
+  - value: 98–105
+    unit: '%'
+    label: Energy balance closure after a thermocouple offset correction
+  - value: ±2.8
+    unit: '%'
+    label: Uncertainty on thermal resistance (k = 1)
+  - value: 458K
+    unit: cells
+    label: ANSYS Fluent conjugate heat transfer model, half symmetry
+repo: cold-plate-testbed
+---
+
+import Geometries from '../../components/Geometries.astro';
+
+## Purpose
+
+The testbed compares four cold plate channel geometries for high-heat-flux electronics on the same copper base, coolant loop, and instrumentation: straight, serpentine, high-density multi-channel, and pin-fin. The channel bodies are interchangeable 3D-printed parts, so each geometry runs on the same base.
+
+<Geometries />
+
+<Figure
+  src="cold-plate-testbed/testbed-overview"
+  alt="Full testbed on the bench: reservoir, pump, flow sensor, cold plate on the heater block, radiator, and DAQ"
+  caption="Testbed overview."
+/>
+
+## Hardware
+
+| Item | Specification |
+| --- | --- |
+| Base plate | C110 copper, 100 × 150 × 3 mm |
+| Channel bodies | 3D-printed ASA, interchangeable |
+| Seal | Silicone gasket, metal G1/4 bulkheads |
+| Heat source | Copper block with two 24 V cartridge heaters, 100 W combined |
+| Loop | Reservoir, PWM pump, Hall-effect flow sensor, cold plate, 120 mm radiator |
+| Coolant | 90/10 distilled water and propylene glycol |
+| Temperature | Five hand-soldered Type-T thermocouples on MAX31856 boards |
+| Flow rate | Hall-effect flow sensor, calibrated in-house by catch-and-weigh |
+| Pressure drop | Honeywell differential pressure sensor |
+| Logging | Arduino Mega at 1 Hz |
+
+<Figure
+  src="cold-plate-testbed/loop-diagram"
+  alt="Loop diagram showing component order and the location of each thermocouple, the flow sensor, and the pressure taps"
+  kind="Diagram"
+  caption="Coolant loop and sensor locations."
+/>
+
+<Figure
+  src="cold-plate-testbed/cold-plate-assembly"
+  alt="Cold plate assembly: copper base, printed ASA channel body, gasket, and G1/4 bulkheads"
+  kind="Photo or CAD render"
+  caption="Cold plate assembly."
+/>
+
+## Baseline test: straight channels
+
+| Parameter | Value |
+| --- | --- |
+| Channels | 9, each 3 × 5 mm |
+| Hydraulic diameter | 3.75 mm |
+| Flow rate | ≈ 840 mL/min |
+| Reynolds number | ≈ 400 to 420, laminar |
+| Heater setpoints | 40, 60, 80, 100 W |
+| Heat flux tested | 6.25 W/cm² |
+
+<p class="eq">D<sub>h</sub> = 4A / P = 4(3 × 5) / (2(3 + 5)) = 3.75 mm</p>
+
+**Result.** Thermal resistance stayed between 0.36 and 0.37 K/W at all four power levels, a spread of 3.3%. At a fixed geometry and flow rate, thermal resistance should not depend on power, so a flat result is a consistency check on the rig and not a performance claim.
+
+<Figure
+  src="cold-plate-testbed/rth-vs-power"
+  alt="Thermal resistance versus heater power for the straight-channel baseline, with uncertainty bars"
+  kind="Plot"
+  caption="Thermal resistance across the power sweep."
+/>
+
+<span class="pending">Pending</span> Per-condition values, the thermal resistance definition with thermocouple locations, and the raw logs will be published in the repository.
+
+## What the analysis caught
+
+<Finding n="01" title="A 0.187 K thermocouple offset in the energy balance">
+  Log statistics showed a 0.187 K offset between a thermocouple pair. With that offset corrected, the energy balance closes to about 98 to 105%.
+</Finding>
+
+<Finding n="02" title="My first calibration was circular">
+  I rejected my own first calibration attempt because it was circular.
+</Finding>
+
+<Finding n="03" title="Entry-region heat transfer: Nu ≈ 9, not 4">
+  The channel flow is in the thermal entry region. The Hausen correlation gives Nu ≈ 9. A fully developed value of about 4 would have been the wrong model and would have cut the predicted heat transfer coefficient by more than half.
+</Finding>
+
+<Finding n="04" title="The printed walls do almost nothing as fins">
+  Fin efficiency is about 0.07 for ASA against about 0.97 for copper. That result is the justification for the copper base.
+</Finding>
+
+<Finding n="05" title="Pressure drop is below sensor resolution">
+  The measured pressure drop is below the resolution of the differential pressure sensor. I report it that way and do not quote a number.
+</Finding>
+
+<Finding n="06" title="Equal flow rate is the wrong basis for comparison">
+  Comparing geometries at equal flow rate confounds velocity with geometry. The test plan now compares them at matched pumping power.
+</Finding>
+
+<Finding n="07" title="Uncertainty is stated with the result">
+  Propagated uncertainty on thermal resistance is ±2.8% (k = 1).
+</Finding>
+
+<Finding n="08" title="Leaks were root-caused, then fixed">
+  The leaks came through the printed layer lines and at the gasket. Interior epoxy and RTV fixed them.
+</Finding>
+
+## CFD model
+
+ANSYS Fluent conjugate heat transfer model of the straight-channel plate: half symmetry, 458K-cell poly-hexcore mesh, laminar.
+
+<Figure
+  src="cold-plate-testbed/cfd-temperature"
+  alt="Temperature contours from the half-symmetry conjugate heat transfer model of the straight-channel plate"
+  kind="CFD result"
+  caption="Conjugate heat transfer model, straight channel."
+/>
+
+<span class="pending">Pending</span> Mesh image and the comparison between the model and the measured thermal resistance.
+
+## Open items
+
+<Callout type="limit" title="Read the results with these limits">
+  - Serpentine, high-density, and pin-fin are designed and analytically predicted, but not yet tested.
+  - Results are n = 1 per condition.
+  - Heater power is a setpoint, not a measured value.
+  - The tested heat flux, 6.25 W/cm², is far below real GPU heat flux.
+</Callout>
+
+## Next steps
+
+- Test the three remaining geometries at matched pumping power.
+- Raise the heater wattage.
+- Fabricate designs with Georgia Tech facilities.
+- Test designs produced by the [cold plate optimization software](/projects/cold-plate-optimizer/).

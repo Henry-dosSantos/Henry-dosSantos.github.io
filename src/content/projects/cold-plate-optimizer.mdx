@@ -1,0 +1,65 @@
+---
+title: Cold Plate CAD/CFD Optimization Software
+shortTitle: Cold Plate Optimizer
+summary: Software to generate cold plate geometries, run OpenFOAM CFD on them, and select designs from a Pareto front. I conceived and directed it. It is built with AI coding assistance and is still in development.
+status: dev
+statusLabel: In development
+order: 3
+context: Started at the Cognition x HackerHouse hackathon, team of four
+period: Oct 2026 to present
+role: Concept and technical direction
+tools:
+  - OpenFOAM
+  - Pareto optimization
+  - Geometry generation
+  - Devin (AI coding agent)
+metrics:
+  - value: '3'
+    label: Designs per run. Temperature-optimized, pressure-optimized, and balanced.
+  - value: OpenFOAM
+    label: Target CFD solver for the loop
+  - value: Pareto
+    label: Front across temperature and pressure drop
+---
+
+import Pipeline from '../../components/Pipeline.astro';
+
+## What it does
+
+The goal is a tool that takes a cold plate design problem from geometry to a short list of candidate designs.
+
+<Pipeline />
+
+## Authorship
+
+<Callout type="note" title="Who built what">
+  The idea is mine, and I directed the work. The code was built with Devin, an AI coding agent, under my direction. The project started at the Cognition x HackerHouse hackathon in October 2026 on a team of four.
+</Callout>
+
+## Status
+
+In development. The hackathon version evaluates designs with a reduced-order thermal and hydraulic model and labels its results as low-fidelity estimates, not validated 3D CFD. It also includes a prototype dashboard for tracking OpenFOAM runs.
+
+Designs from this tool have not yet been tested on hardware. The plan is to build them and test them on the [cold plate testbed](/projects/cold-plate-testbed/).
+
+## Interface
+
+The intended interface is simple and minimal.
+
+<Figure
+  src="cold-plate-optimizer/ui"
+  alt="Screenshot of the application interface"
+  kind="Screenshot"
+/>
+
+<Figure
+  src="cold-plate-optimizer/geometries"
+  alt="Example generated geometries: pin fin, straight channel, gyroid, and organic"
+  kind="Render"
+/>
+
+<Figure
+  src="cold-plate-optimizer/pareto"
+  alt="Example Pareto front with the temperature-optimized, pressure-optimized, and balanced designs marked"
+  kind="Plot"
+/>

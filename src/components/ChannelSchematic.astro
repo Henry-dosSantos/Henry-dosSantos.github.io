@@ -1,0 +1,163 @@
+---
+// Hero figure: top-view schematic of the straight-channel baseline.
+// The drawing is generic and not to scale. The numbers in the legend are measured or as-built values.
+const channels = Array.from({ length: 9 }, (_, i) => 80 + i * 30);
+---
+
+<figure class="sch">
+  <div class="sch__bar mono">
+    <span>Straight-channel baseline</span>
+    <span class="sch__live">Flagship testbed</span>
+  </div>
+  <svg class="sch__svg" viewBox="0 0 600 400" role="img" aria-labelledby="sch-title sch-desc">
+    <title id="sch-title">Schematic of a nine-channel straight cold plate</title>
+    <desc id="sch-desc">
+      Coolant enters an inlet manifold on the left, splits across nine parallel channels over a central heat
+      source, and leaves through an outlet manifold on the right, warming from inlet to outlet.
+    </desc>
+    <defs>
+      <linearGradient id="sch-flow" gradientUnits="userSpaceOnUse" x1="104" y1="0" x2="496" y2="0">
+        <stop offset="0" stop-color="#5cd6f5"></stop>
+        <stop offset="0.55" stop-color="#debd88"></stop>
+        <stop offset="1" stop-color="#ff6a3d"></stop>
+      </linearGradient>
+      <radialGradient id="sch-heat" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#ff6a3d" stop-opacity="0.34"></stop>
+        <stop offset="1" stop-color="#ff6a3d" stop-opacity="0"></stop>
+      </radialGradient>
+    </defs>
+
+    <rect x="20" y="30" width="560" height="340" rx="20" fill="#051e39" stroke="#b39051" stroke-opacity="0.55" stroke-width="1.5"></rect>
+    <ellipse class="sch__glow" cx="300" cy="200" rx="170" ry="150" fill="url(#sch-heat)"></ellipse>
+
+    <rect x="70" y="62" width="34" height="276" rx="17" fill="#5cd6f5" fill-opacity="0.13" stroke="#5cd6f5" stroke-opacity="0.5"></rect>
+    <rect x="496" y="62" width="34" height="276" rx="17" fill="#ff6a3d" fill-opacity="0.13" stroke="#ff6a3d" stroke-opacity="0.5"></rect>
+
+    {
+      channels.map((y, i) => (
+        <g>
+          <rect x="104" y={y - 7} width="392" height="14" fill="#e8eef5" fill-opacity="0.045"></rect>
+          <line class="sch__dash" x1="108" y1={y} x2="492" y2={y} stroke="url(#sch-flow)" style={`animation-delay:-${(i * 0.19).toFixed(2)}s`}></line>
+        </g>
+      ))
+    }
+
+    <rect x="222" y="122" width="156" height="156" rx="6" fill="none" stroke="#ff6a3d" stroke-width="1.5" stroke-dasharray="7 6"></rect>
+
+    <circle cx="87" cy="200" r="9" fill="#020d1a" stroke="#5cd6f5" stroke-width="2"></circle>
+    <circle cx="513" cy="200" r="9" fill="#020d1a" stroke="#ff6a3d" stroke-width="2"></circle>
+
+    <g class="sch__label">
+      <text x="87" y="52" text-anchor="middle" fill="#5cd6f5">IN</text>
+      <text x="513" y="52" text-anchor="middle" fill="#ff6a3d">OUT</text>
+      <text x="300" y="357" text-anchor="middle" fill="#ff6a3d">HEAT SOURCE, 40 TO 100 W</text>
+    </g>
+  </svg>
+  <dl class="sch__legend">
+    <div><dt>Base</dt><dd>C110 copper, 100 &times; 150 &times; 3 mm</dd></div>
+    <div><dt>Channels</dt><dd>9 &times; (3 &times; 5 mm), D<sub>h</sub> = 3.75 mm</dd></div>
+    <div><dt>Flow</dt><dd>&asymp; 840 mL/min, Re &asymp; 400 to 420, laminar</dd></div>
+  </dl>
+  <figcaption>Schematic, not to scale. The animation is illustrative, not CFD output.</figcaption>
+</figure>
+
+<style>
+  .sch {
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, rgb(10 40 71 / 0.6), rgb(2 13 26 / 0.6));
+    overflow: hidden;
+  }
+
+  .sch__bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.8rem 1.1rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.6875rem;
+  }
+
+  .sch__live {
+    color: var(--gold-light);
+  }
+
+  .sch__svg {
+    width: 100%;
+    height: auto;
+    padding: 0.6rem;
+  }
+
+  .sch__dash {
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-dasharray: 14 26;
+  }
+
+  .sch__label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+
+  .sch__legend {
+    margin: 0;
+    border-top: 1px solid var(--line);
+    font-size: 0.875rem;
+  }
+
+  .sch__legend div {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.75rem;
+    padding: 0.5rem 1.1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sch__legend dt {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding-top: 0.2em;
+  }
+
+  .sch__legend dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  figcaption {
+    padding: 0.7rem 1.1rem 0.85rem;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sch__dash {
+      animation: sch-flow 1.5s linear infinite;
+    }
+
+    .sch__glow {
+      animation: sch-glow 4.5s ease-in-out infinite;
+      transform-origin: 300px 200px;
+    }
+  }
+
+  @keyframes sch-flow {
+    to {
+      stroke-dashoffset: -40;
+    }
+  }
+
+  @keyframes sch-glow {
+    50% {
+      opacity: 0.55;
+      transform: scale(0.94);
+    }
+  }
+</style>
