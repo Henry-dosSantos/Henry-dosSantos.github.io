@@ -43,6 +43,7 @@ const flagship = data.flagship;
               </a>
             )}
           </p>
+          <slot name="extra" />
         </div>
         <div>
           {data.metrics.length > 0 && <Metrics items={data.metrics} caption={metricsCaption} />}

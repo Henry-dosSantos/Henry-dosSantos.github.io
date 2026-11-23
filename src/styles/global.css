@@ -1,7 +1,8 @@
-/* Colors: Georgia Tech core palette (brand.gatech.edu/our-look/colors, 2026-27 standards). */
+/* Colors: Georgia Tech gold and white on black (brand.gatech.edu/our-look/colors, 2026-27 standards),
+   with black as the dark surface at the owner's request. */
 :root {
-  --navy: #051e39;
-  --navy-2: #0a2847;
+  --black: #000000;
+  --black-2: #1c1c1c;
   --gold: #b39051;
   --gold-light: #debd88;
   --gold-deep: #735a2e;
@@ -9,15 +10,14 @@
   --tint: #f9f6e5;
   --heat: #a8360a;
   --heat-tint: #fbeee6;
-  --coolant: #5cd6f5;
   --hot: #ff6a3d;
 
   --bg: var(--white);
-  --fg: var(--navy);
-  --fg-muted: #3d5068;
-  --line: rgb(5 30 57 / 0.14);
-  --line-strong: rgb(5 30 57 / 0.4);
-  --focus: var(--navy);
+  --fg: var(--black);
+  --fg-muted: #4d4d4d;
+  --line: rgb(0 0 0 / 0.14);
+  --line-strong: rgb(0 0 0 / 0.4);
+  --focus: var(--black);
   --link-hover: var(--gold-deep);
 
   --font-sans: var(--font-archivo), system-ui, sans-serif;
@@ -36,12 +36,12 @@
   color-scheme: light;
 }
 
-.on-navy {
-  --bg: var(--navy);
+.on-black {
+  --bg: var(--black);
   --fg: var(--white);
-  --fg-muted: #b9c7d6;
-  --line: rgb(255 255 255 / 0.16);
-  --line-strong: rgb(255 255 255 / 0.42);
+  --fg-muted: #b8b8b8;
+  --line: rgb(255 255 255 / 0.18);
+  --line-strong: rgb(255 255 255 / 0.45);
   --focus: var(--gold-light);
   --link-hover: var(--gold-light);
   background: var(--bg);
@@ -50,12 +50,12 @@
 
 .on-gold {
   --bg: var(--gold);
-  --fg: var(--navy);
-  --fg-muted: var(--navy);
-  --line: rgb(5 30 57 / 0.3);
-  --line-strong: rgb(5 30 57 / 0.6);
-  --focus: var(--navy);
-  --link-hover: var(--navy);
+  --fg: var(--black);
+  --fg-muted: var(--black);
+  --line: rgb(0 0 0 / 0.3);
+  --line-strong: rgb(0 0 0 / 0.6);
+  --focus: var(--black);
+  --link-hover: var(--black);
   background: var(--bg);
   color: var(--fg);
 }
@@ -81,7 +81,7 @@ html {
 body {
   margin: 0;
   background: var(--white);
-  color: var(--navy);
+  color: var(--black);
   font-family: var(--font-sans);
   font-size: 1.0625rem;
   line-height: 1.6;
@@ -142,7 +142,7 @@ a:hover {
 
 ::selection {
   background: var(--gold);
-  color: var(--navy);
+  color: var(--black);
 }
 
 img,
@@ -192,7 +192,7 @@ sup {
   z-index: 100;
   padding: 0.6rem 1rem;
   background: var(--gold);
-  color: var(--navy);
+  color: var(--black);
   font-weight: 700;
   border-radius: var(--r-ctl);
   text-decoration: none;
@@ -200,7 +200,7 @@ sup {
 
 .skip:focus {
   top: 1rem;
-  color: var(--navy);
+  color: var(--black);
 }
 
 .num {
@@ -250,13 +250,13 @@ sup {
 .btn--primary {
   background: var(--gold);
   border-color: var(--gold);
-  color: var(--navy);
+  color: var(--black);
 }
 
 .btn--primary:hover {
   background: var(--gold-light);
   border-color: var(--gold-light);
-  color: var(--navy);
+  color: var(--black);
 }
 
 .btn svg {
@@ -321,20 +321,20 @@ sup {
   .hdr__nav,
   .skip,
   .toc,
-  .sch__pause,
+  .loop__pause,
   .pn {
     display: none !important;
   }
 
-  .on-navy,
+  .on-black,
   .on-gold {
     --bg: var(--white);
-    --fg: var(--navy);
-    --fg-muted: #3d5068;
-    --line: rgb(5 30 57 / 0.2);
-    --line-strong: rgb(5 30 57 / 0.5);
+    --fg: var(--black);
+    --fg-muted: #4d4d4d;
+    --line: rgb(0 0 0 / 0.2);
+    --line-strong: rgb(0 0 0 / 0.5);
     background: var(--white);
-    color: var(--navy);
+    color: var(--black);
   }
 
   .hdr {

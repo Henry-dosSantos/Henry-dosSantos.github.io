@@ -13,6 +13,11 @@ All paths are relative to `src/assets/projects/`.
 | File | What it should show |
 | --- | --- |
 | `cold-plate-testbed/cover.jpg` | Best single photo of the rig. Shown on the home page. |
+| `cold-plate-testbed/body-straight.png` | Delivered. CAD render of the straight-channel body, channel side. |
+| `cold-plate-testbed/body-serpentine.png` | Delivered. CAD render of the serpentine body, channel side. |
+| `cold-plate-testbed/body-high-density.png` | Delivered. CAD render of the high-density multi-channel body, channel side. |
+| `cold-plate-testbed/body-pin-fin.png` | Delivered. CAD render of the pin-fin body, channel side. |
+| `cold-plate-testbed/channel-body-outside.png` | Delivered. CAD render of a channel body from the outside. |
 | `cold-plate-testbed/testbed-overview.jpg` | Full testbed on the bench: reservoir, pump, flow sensor, cold plate on the heater block, radiator, DAQ. |
 | `cold-plate-testbed/loop-diagram.png` | Loop diagram with component order and the location of each thermocouple, the flow sensor, and the pressure taps. |
 | `cold-plate-testbed/cold-plate-assembly.jpg` | Photo or CAD render of the assembly: copper base, ASA channel body, gasket, G1/4 bulkheads. |

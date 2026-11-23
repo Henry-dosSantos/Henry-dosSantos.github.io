@@ -1,8 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import ChannelSchematic from '../components/ChannelSchematic.astro';
+import TestLoop from '../components/TestLoop.astro';
 import ProjectEntry from '../components/ProjectEntry.astro';
+import Geometries from '../components/Geometries.astro';
 import Icon from '../components/Icon.astro';
 import { site } from '../site.config.mjs';
 import { experience, education, focus, skills, sideBuilds } from '../data/profile';
@@ -15,7 +16,7 @@ const others = projects.filter((p) => p !== flagship);
 ---
 
 <Base>
-  <section class="hero on-navy">
+  <section class="hero on-black">
     <div class="wrap">
       <h1 class="hero__name">Henry dos&nbsp;Santos</h1>
       <div class="hero__grid">
@@ -37,7 +38,7 @@ const others = projects.filter((p) => p !== flagship);
         </div>
       </div>
       <div class="hero__fig">
-        <ChannelSchematic />
+        <TestLoop />
       </div>
       </div>
     </div>
@@ -52,7 +53,9 @@ const others = projects.filter((p) => p !== flagship);
             entry={flagship}
             metricsCaption="Measured on the straight-channel baseline"
             metricsNote="One run per condition (n = 1). Heater power is a setpoint, not a measurement."
-          />
+          >
+            <Geometries compact slot="extra" />
+          </ProjectEntry>
         )
       }
       <ul class="pj-list">
@@ -175,9 +178,9 @@ const others = projects.filter((p) => p !== flagship);
     margin-top: clamp(1.75rem, 4vw, 2.75rem);
   }
 
-  @media (min-width: 980px) {
+  @media (min-width: 1040px) {
     .hero__grid {
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
     }
   }
 
