@@ -42,11 +42,12 @@ Nothing before the Jan 4, 2027 submission and team approval. After that:
 
 | File | What it should show |
 | --- | --- |
-| `itherm-2027/cover.jpg` | Home page image. |
-| `itherm-2027/design.png` | Cold plate design visuals. |
-| `itherm-2027/cfd-results.png` | CFD temperature and pressure fields against the competition limits. |
-| `itherm-2027/prototype.jpg` | Machined prototype. |
-| `itherm-2027/test-data.png` | Measured temperature and pressure drop. |
+| `itherm-2027/cover.png` | Delivered (approved by the team for publication on Nov 23, 2026). Home page image: CAD render of the pin-fin base. |
+| `itherm-2027/render-pin-fin.png`, `render-straight-fin.png` | Delivered (approved by the team for publication on Nov 23, 2026). CAD renders of the two fin layouts. |
+| `itherm-2027/layout-pin-fin.jpg`, `layout-straight-fin.png` | Delivered (approved by the team for publication on Nov 23, 2026). Top-view layout drawings. |
+| `itherm-2027/cfd-results.png` | Held until after Jan 4, 2027 and team approval. CFD temperature and pressure fields against the competition limits. |
+| `itherm-2027/prototype.jpg` | Held until after Jan 4, 2027 and team approval. Machined prototype. |
+| `itherm-2027/test-data.png` | Held until after Jan 4, 2027 and team approval. Measured temperature and pressure drop. |
 
 When these go up, also remove the `hold` line from each `<Figure>` in `src/content/projects/itherm-2027.mdx` and delete the "Publication hold" callout.
 

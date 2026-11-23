@@ -5,6 +5,7 @@ summary: "5-person METTL team designing a cold plate for the ITherm 2027 student
 status: progress
 statusLabel: In progress, due Jan 4, 2027
 order: 2
+coverAlt: CAD render of a copper cold plate base with pin fins and a central spiral
 context: METTL lab research, assigned by Prof. Yogendra Joshi
 period: Design files and white paper due Jan 4, 2027
 role: Modeling the cold plate geometry
@@ -18,7 +19,7 @@ tools:
 ---
 
 <Callout type="hold" title="Publication hold until after Jan 4, 2027">
-  Design files, geometry, CFD results, and test data stay unpublished until after the submission and my team's approval. Until then this page covers the problem, the constraints, and my role.
+  Design files, CFD results, and test data stay unpublished until after the submission and my team's approval. The fin layout images on this page are shown with the team's approval.
 </Callout>
 
 ## Problem
@@ -44,6 +45,40 @@ I model the cold plate geometry on a team of 5. Prof. Joshi assigned the project
 
 Methods and tools: topology optimization, SOLIDWORKS and Fusion 360 for CAD, ANSYS Fluent for CFD, and Python and MATLAB for scripting.
 
+## Fin layouts
+
+Two fin layouts from the geometry work, both still in progress.
+
+<FigureRow cols={2} caption="CAD renders of the two layouts on the copper base: pin fins with curved walls around a central spiral, and straight fins.">
+  <Figure
+    src="itherm-2027/render-pin-fin"
+    alt="CAD render of a square copper base plate with four blocks of pin fins around a central pin-fin region enclosed by spiral walls, and bolt holes around the edge"
+    kind="CAD render"
+    sizes="(min-width: 900px) 25rem, (min-width: 560px) 50vw, 100vw"
+  />
+  <Figure
+    src="itherm-2027/render-straight-fin"
+    alt="CAD render of a square copper base plate with blocks of straight fins: one central block and four outer blocks, with curved walls between them"
+    kind="CAD render"
+    sizes="(min-width: 900px) 25rem, (min-width: 560px) 50vw, 100vw"
+  />
+</FigureRow>
+
+<FigureRow cols={2} caption="Top views of the same two layouts. The two GPUs sit in the middle, with four HBM stacks above and four below. Coolant enters at the top and bottom edges and leaves through the outlet slot across the middle.">
+  <Figure
+    src="itherm-2027/layout-pin-fin"
+    alt="Top-view layout drawing of the pin-fin design, with labels for GPU1, GPU2, H1 to H8, two inlets, and the outlet slot"
+    kind="Drawing"
+    sizes="(min-width: 900px) 25rem, (min-width: 560px) 50vw, 100vw"
+  />
+  <Figure
+    src="itherm-2027/layout-straight-fin"
+    alt="Top-view layout drawing of the straight-fin design, with labels for GPU1, GPU2, H1 to H8, two inlets, and the outlet slot"
+    kind="Drawing"
+    sizes="(min-width: 900px) 25rem, (min-width: 560px) 50vw, 100vw"
+  />
+</FigureRow>
+
 ## Prototype and test
 
 The team is machining a physical prototype at Georgia Tech's Montgomery Machining Mall and testing it. The design will be backed by measured data, not simulation alone.
@@ -51,13 +86,6 @@ The team is machining a physical prototype at Georgia Tech's Montgomery Machinin
 ## Results
 
 Each item below is held until after the Jan 4, 2027 submission and team approval.
-
-<Figure
-  src="itherm-2027/design"
-  alt="Cold plate design visuals"
-  kind="Design visual"
-  hold
-/>
 
 <Figure
   src="itherm-2027/cfd-results"
