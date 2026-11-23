@@ -12,22 +12,26 @@ All paths are relative to `src/assets/projects/`.
 
 | File | What it should show |
 | --- | --- |
-| `cold-plate-testbed/cover.jpg` | Best single photo of the rig. Shown on the home page. |
+| `cold-plate-testbed/cover.jpg` | Delivered. The testbed on a bench. Shown on the home page. |
 | `cold-plate-testbed/body-straight.png` | Delivered. CAD render of the straight-channel body, channel side. |
 | `cold-plate-testbed/body-serpentine.png` | Delivered. CAD render of the serpentine body, channel side. |
 | `cold-plate-testbed/body-high-density.png` | Delivered. CAD render of the high-density multi-channel body, channel side. |
 | `cold-plate-testbed/body-pin-fin.png` | Delivered. CAD render of the pin-fin body, channel side. |
 | `cold-plate-testbed/channel-body-outside.png` | Delivered. CAD render of a channel body from the outside. |
-| `cold-plate-testbed/testbed-overview.jpg` | Full testbed on the bench: reservoir, pump, flow sensor, cold plate on the heater block, radiator, DAQ. |
+| `cold-plate-testbed/testbed-overview.jpg` | Delivered. The testbed on the bench: laptop, power supply, DAQ, pump and reservoir, cold plate, radiator. |
+| `cold-plate-testbed/copper-base.jpg` | Delivered. Underside of the cold plate, the copper base plate. |
+| `cold-plate-testbed/printed-serpentine-body.jpg` | Delivered. Printed serpentine channel body, channel side, with the gasket bead. |
+| `cold-plate-testbed/heater-stack.jpg` | Delivered. Cold plate on the heater block. |
+| `cold-plate-testbed/daq.jpg` | Delivered. Thermocouple amplifier boards wired to the Arduino Mega. |
 | `cold-plate-testbed/loop-diagram.png` | Loop diagram with component order and the location of each thermocouple, the flow sensor, and the pressure taps. |
-| `cold-plate-testbed/cold-plate-assembly.jpg` | Photo or CAD render of the assembly: copper base, ASA channel body, gasket, G1/4 bulkheads. |
-| `cold-plate-testbed/rth-vs-power.png` | Thermal resistance vs. heater power for the straight-channel baseline, with uncertainty bars. |
+| `cold-plate-testbed/cold-plate-assembly.jpg` | Delivered. Assembled cold plate with the push-to-connect fittings. |
+| `cold-plate-testbed/rth-vs-power.png` | Delivered. Thermal resistance vs. heater power for the straight-channel baseline. |
 | `cold-plate-testbed/cfd-temperature.png` | Temperature contours from the Fluent half-symmetry CHT model. |
 
 Also needed for the write-up text (send these as text and they get added to the page):
 
 - Thermal resistance at each of the four power levels.
-- The thermal resistance definition (which temperatures) and where each thermocouple sits.
+- Where each thermocouple sits.
 - Mesh image, and the CFD vs. measured thermal resistance comparison.
 
 Raw logs, analysis scripts, CAD, firmware, and CFD files go in the `cold-plate-testbed` repository, not here. That repository's README lists where each belongs.
@@ -61,11 +65,14 @@ Only use output the tool has actually produced.
 
 | File | What it should show |
 | --- | --- |
-| `printed-hardware/cover.jpg` | Home page image. |
-| `printed-hardware/wrench-kits.jpg` | The PETG music stand wrench kits. |
-| `printed-hardware/rack.jpg` | The second rack layer installed at Cherith Farms, connectors visible. |
+| `printed-hardware/cover.jpg` | Delivered. CAD render of a wrench kit. Shown on the home page. |
+| `printed-hardware/wrench-kit-assembled.jpg`, `wrench-kit-open.jpg`, `wrench-kit-parts.jpg` | Delivered. Photos of the printed wrench kit (small originals, shown at most about 17rem wide). |
+| `printed-hardware/rack-render.jpg`, `rack-connectors.jpg`, `rack-mesh-detail.jpg` | Delivered. CAD renders of the rack layer, the 7 connector designs, and a connector on a rail. |
+| `printed-hardware/rack.jpg` | Still needed: the second rack layer installed at Cherith Farms, connectors visible. |
 | `printed-hardware/rack-beam-analysis.png` | Scan or clean copy of the hand beam analysis. |
-| `printed-hardware/mouthpiece-visualizers.jpg` | The brass mouthpiece visualizers. |
+| `printed-hardware/mouthpiece-visualizers.jpg` | Delivered. CAD render of the visualizers in four sizes. |
+| `printed-hardware/hair-dryer-mount.jpg` | Delivered. Printed hair dryer mount. |
+| `printed-hardware/detergent-container.jpg` | Delivered. CAD render of a detergent container with lid and scoop. |
 
 ## Site-wide
 

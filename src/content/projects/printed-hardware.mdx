@@ -5,6 +5,7 @@ summary: Functional printed parts that I designed, built, and donated. More than
 status: complete
 statusLabel: Completed
 order: 4
+coverAlt: CAD render of a music stand wrench kit
 context: Personal design and service work
 period: Completed
 tools:
@@ -20,10 +21,23 @@ tools:
 
 I designed and printed more than 100 PETG music stand wrench kits and donated them to middle and high school band programs across Cherokee and Fulton counties.
 
-<Figure
-  src="printed-hardware/wrench-kits"
-  alt="PETG music stand wrench kits"
-/>
+<FigureRow cols={3} stack={false} caption="Printed wrench kits: assembled, opened, and laid out as parts.">
+  <Figure
+    src="printed-hardware/wrench-kit-assembled"
+    alt="A printed wrench kit, assembled: two wrenches stored upright in a cylindrical holder"
+    sizes="(min-width: 900px) 17rem, 34vw"
+  />
+  <Figure
+    src="printed-hardware/wrench-kit-open"
+    alt="The holder opened into its two halves, with a wrench resting on each"
+    sizes="(min-width: 900px) 17rem, 34vw"
+  />
+  <Figure
+    src="printed-hardware/wrench-kit-parts"
+    alt="The four printed parts laid out: two wrenches and the two holder halves"
+    sizes="(min-width: 900px) 17rem, 34vw"
+  />
+</FigureRow>
 
 ## Rack extension for Cherith Farms
 
@@ -39,8 +53,30 @@ Cherith Farms is a CSA farm. I designed, built, and donated a second, strut-supp
 | Actual load | ≈ 4 to 6 psf |
 
 <Figure
+  src="printed-hardware/rack-render"
+  alt="CAD render of the rack layer: a two-level lumber frame joined by black printed connectors at the corners, at the posts, and along the rails"
+  kind="CAD render"
+  caption="CAD render of the rack layer with its 18 printed connectors."
+/>
+
+<FigureRow cols={2} caption="The 7 connector designs, and a connector on a rail with the wire mesh.">
+  <Figure
+    src="printed-hardware/rack-connectors"
+    alt="CAD render of the seven connector designs lined up"
+    kind="CAD render"
+    sizes="(min-width: 900px) 25rem, (min-width: 560px) 50vw, 100vw"
+  />
+  <Figure
+    src="printed-hardware/rack-mesh-detail"
+    alt="CAD render, close view of a printed connector on a wooden rail with wire mesh"
+    kind="CAD render"
+    sizes="(min-width: 900px) 25rem, (min-width: 560px) 50vw, 100vw"
+  />
+</FigureRow>
+
+<Figure
   src="printed-hardware/rack"
-  alt="Strut-supported second rack layer installed at Cherith Farms, with a close view of the printed connectors"
+  alt="The rack layer installed at Cherith Farms"
 />
 
 <Figure
@@ -55,9 +91,26 @@ I designed and donated 3D-printed brass mouthpiece visualizers to Cambridge High
 
 <Figure
   src="printed-hardware/mouthpiece-visualizers"
-  alt="3D-printed brass mouthpiece visualizers"
+  alt="CAD render of four mouthpiece visualizers in increasing size"
+  kind="CAD render"
+  caption="CAD render of the visualizers in four sizes."
+  narrow
 />
 
 ## Adapters and household tools
 
 Various adapters and household tools designed in Fusion 360.
+
+<FigureRow cols={2} caption="A printed hair dryer mount, and a CAD render of a laundry detergent container with its lid and scoop.">
+  <Figure
+    src="printed-hardware/hair-dryer-mount"
+    alt="Black 3D-printed hair dryer mount standing on a counter"
+    sizes="(min-width: 900px) 25rem, (min-width: 560px) 50vw, 100vw"
+  />
+  <Figure
+    src="printed-hardware/detergent-container"
+    alt="CAD render of a detergent container, its lid, and a scoop"
+    kind="CAD render"
+    sizes="(min-width: 900px) 25rem, (min-width: 560px) 50vw, 100vw"
+  />
+</FigureRow>

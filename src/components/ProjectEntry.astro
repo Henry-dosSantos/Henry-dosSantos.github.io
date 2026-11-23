@@ -30,7 +30,7 @@ const flagship = data.flagship;
         <span class="muted">{data.context}</span>
       </p>
       {cover && (
-        <Image class="pe__cover" src={cover} alt="" widths={[800, 1200, 1600]} sizes="(min-width: 1120px) 1120px, 100vw" loading="lazy" />
+        <Image class="pe__cover" src={cover} alt={data.coverAlt ?? ''} widths={[800, 1200, 1600]} sizes="(min-width: 1120px) 1120px, 100vw" loading="lazy" />
       )}
       <div class="pe__cols">
         <div>
@@ -60,7 +60,7 @@ const flagship = data.flagship;
         <p class="pe__sum">{data.summary}</p>
       </div>
       <div class="pe__side">
-        {cover && <Image class="pe__thumb" src={cover} alt="" widths={[480, 800]} sizes="15rem" loading="lazy" />}
+        {cover && <Image class="pe__thumb" src={cover} alt={data.coverAlt ?? ''} widths={[480, 800]} sizes="15rem" loading="lazy" />}
         <p class="pe__status">{data.statusLabel}</p>
         <p class="muted">{data.context}</p>
         {data.tools.length > 0 && <p class="muted pe__tools">{data.tools.join(', ')}</p>}
@@ -105,7 +105,8 @@ const flagship = data.flagship;
 
   .pe__cover {
     width: 100%;
-    max-height: 26rem;
+    height: auto;
+    aspect-ratio: 12 / 5;
     margin-top: 1.75rem;
     object-fit: cover;
     border-radius: var(--r-sm);

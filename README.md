@@ -22,10 +22,15 @@ Static site built with [Astro](https://astro.build). Every push to `main` builds
 3. Write the body in Markdown under it. `## Heading` lines become the page sections and the "On this page" list.
 4. Commit and push. The entry on the home page and the project page are both generated from that one file.
 
-Three building blocks are available in the body without any import:
+Four building blocks are available in the body without any import:
 
 ```mdx
 <Figure src="my-project/bench-photo" alt="What the image shows" caption="Optional caption." />
+
+<FigureRow cols={2} caption="One caption shared by both figures.">
+  <Figure src="my-project/left" alt="What the left image shows" sizes="(min-width: 900px) 25rem, (min-width: 560px) 50vw, 100vw" />
+  <Figure src="my-project/right" alt="What the right image shows" sizes="(min-width: 900px) 25rem, (min-width: 560px) 50vw, 100vw" />
+</FigureRow>
 
 <Callout type="limit" title="Open items">
   - Something not yet tested.
@@ -40,7 +45,9 @@ Three building blocks are available in the body without any import:
 
 Drop the file into `src/assets/projects/<project>/` with the name the figure expects, then push. `<Figure src="my-project/bench-photo" />` looks for `src/assets/projects/my-project/bench-photo.jpg` (or `.png`, `.webp`). Until the file exists the page shows a short labeled note ("Plot pending." followed by what the figure shows). A figure marked `hold` shows "withheld" instead; a bare `hold` is enough, and a string adds the reason. Images are resized and compressed at build time, so upload the full-resolution original.
 
-A file named `cover.jpg` in a project folder becomes that project's image on the home page.
+A file named `cover.jpg` in a project folder becomes that project's image on the home page. Set `coverAlt` in the project's frontmatter to describe it.
+
+Photos must have their metadata (EXIF, location) removed before they are added, because the repository is public.
 
 `ASSETS.md` lists every file the site is currently waiting for.
 

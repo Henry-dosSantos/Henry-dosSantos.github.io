@@ -17,6 +17,8 @@ const projects = defineCollection({
     statusLabel: z.string(),
     // Lower numbers appear first.
     order: z.number(),
+    // Alt text for the home page cover image (src/assets/projects/<id>/cover.*). Empty if unset.
+    coverAlt: z.string().optional(),
     // The flagship entry spans the full width on the home page. Use for one project.
     flagship: z.boolean().default(false),
     context: z.string(),

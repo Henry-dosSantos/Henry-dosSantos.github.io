@@ -12,17 +12,21 @@ interface Props {
   kind?: string;
   // Marks the slot as intentionally withheld. A string is shown as the reason.
   hold?: boolean | string;
+  // Responsive image sizes. Defaults to a single wide column.
+  sizes?: string;
+  // Limits the figure width, for charts that should not be blown up.
+  narrow?: boolean;
 }
 
-const { src, alt, caption, kind = 'Photo', hold } = Astro.props;
+const { src, alt, caption, kind = 'Photo', hold, sizes = '(min-width: 900px) 800px, 100vw', narrow = false } = Astro.props;
 const image = findImage(src);
 ---
 
-<figure class:list={['fig', !image && 'fig--pending']}>
+<figure class:list={['fig', !image && 'fig--pending', narrow && 'fig--narrow']}>
   {
     image ? (
       <>
-        <Image src={image} alt={alt} widths={[480, 800, 1200, 1600]} sizes="(min-width: 900px) 800px, 100vw" loading="lazy" />
+        <Image src={image} alt={alt} widths={[480, 800, 1200, 1600]} sizes={sizes} loading="lazy" />
         {caption && <figcaption>{caption}</figcaption>}
       </>
     ) : (
@@ -46,6 +50,10 @@ const image = findImage(src);
 <style>
   .fig {
     margin: 2rem 0;
+  }
+
+  .fig--narrow {
+    max-width: 40rem;
   }
 
   .fig--pending {

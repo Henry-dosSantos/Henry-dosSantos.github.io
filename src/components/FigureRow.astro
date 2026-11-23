@@ -1,0 +1,44 @@
+---
+interface Props {
+  cols?: 2 | 3;
+  stack?: boolean;
+  caption?: string;
+}
+
+const { cols = 2, stack = true, caption } = Astro.props;
+---
+
+<div class:list={['frow', stack && 'frow--stack']} style={`--cols:${cols}`}>
+  <div class="frow__grid"><slot /></div>
+  {caption && <p class="frow__cap">{caption}</p>}
+</div>
+
+<style>
+  .frow {
+    margin: 2rem 0;
+  }
+
+  .frow__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .frow__grid :global(.fig) {
+    margin: 0;
+  }
+
+  @media (max-width: 559px) {
+    .frow--stack .frow__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .frow__cap {
+    max-width: var(--measure);
+    margin-top: 0.6rem;
+    font-size: 0.875rem;
+    color: var(--fg-muted);
+  }
+</style>

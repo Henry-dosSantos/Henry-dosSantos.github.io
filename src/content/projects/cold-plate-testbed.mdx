@@ -5,6 +5,7 @@ summary: Closed-loop test rig that compares cold plate channel geometries for hi
 status: active
 statusLabel: Ongoing, baseline tested
 order: 1
+coverAlt: "The testbed on a bench: a laptop logging the DAQ output, a bench power supply, the DAQ wiring, the pump and reservoir, the cold plate, and the radiator"
 flagship: true
 context: Self-directed project
 period: Ongoing
@@ -42,8 +43,8 @@ The testbed compares 4 cold plate channel geometries for high-heat-flux electron
 
 <Figure
   src="cold-plate-testbed/testbed-overview"
-  alt="Full testbed on the bench: reservoir, pump, flow sensor, cold plate on the heater block, radiator, and DAQ"
-  caption="Testbed overview."
+  alt="The testbed on a bench: a laptop showing the DAQ serial log, a bench power supply, the Arduino Mega DAQ wiring, the pump and reservoir, the cold plate, and the radiator"
+  caption="The testbed on the bench. Left to right: laptop logging the DAQ output, bench power supply, DAQ, pump and reservoir, cold plate, radiator."
 />
 
 ## Hardware
@@ -73,14 +74,39 @@ The testbed compares 4 cold plate channel geometries for high-heat-flux electron
   alt="CAD render of a channel body from the outside, showing the two port openings and eight bolt holes"
   kind="CAD render"
   caption="Channel body, outside face (CAD render)."
+  narrow
 />
 
-<Figure
-  src="cold-plate-testbed/cold-plate-assembly"
-  alt="Cold plate assembly: copper base, printed ASA channel body, gasket, and G1/4 bulkheads"
-  kind="Photo or CAD render"
-  caption="Cold plate assembly."
-/>
+<FigureRow cols={3} caption="The assembled cold plate, with push-to-connect fittings on the two G1/4 bulkheads; the copper base plate, seen from below; and a printed serpentine channel body, channel side, with the gasket bead.">
+  <Figure
+    src="cold-plate-testbed/cold-plate-assembly"
+    alt="Assembled cold plate: a gray printed ASA channel body bolted to the copper base plate, with two push-to-connect fittings on top"
+    sizes="(min-width: 900px) 17rem, 34vw"
+  />
+  <Figure
+    src="cold-plate-testbed/copper-base"
+    alt="Underside of the cold plate: the copper base plate with the ends of the eight bolts"
+    sizes="(min-width: 900px) 17rem, 34vw"
+  />
+  <Figure
+    src="cold-plate-testbed/printed-serpentine-body"
+    alt="Printed ASA serpentine channel body seen from the channel side, with a black gasket bead around the cavity and a bulkhead fitting at each end"
+    sizes="(min-width: 900px) 17rem, 34vw"
+  />
+</FigureRow>
+
+<FigureRow cols={2} caption="The cold plate sitting on the heater block, and the DAQ, with the thermocouple amplifier boards wired to the Arduino Mega.">
+  <Figure
+    src="cold-plate-testbed/heater-stack"
+    alt="Cold plate sitting on the heater block, with coolant tubing attached and the bench power supply behind it"
+    sizes="(min-width: 900px) 25rem, (min-width: 560px) 50vw, 100vw"
+  />
+  <Figure
+    src="cold-plate-testbed/daq"
+    alt="DAQ wiring: a row of thermocouple amplifier boards with screw terminals, wired to an Arduino Mega on a breadboard"
+    sizes="(min-width: 900px) 25rem, (min-width: 560px) 50vw, 100vw"
+  />
+</FigureRow>
 
 ## Baseline test: straight channels
 
@@ -99,12 +125,13 @@ Thermal resistance stayed between 0.36 and 0.37 K/W at all four power levels, a 
 
 <Figure
   src="cold-plate-testbed/rth-vs-power"
-  alt="Thermal resistance versus heater power for the straight-channel baseline, with uncertainty bars"
+  alt="Line chart of thermal resistance against heater input power for the straight-channel baseline. The four points, at 40, 60, 80 and 100 W, lie between 0.36 and 0.37 K/W."
   kind="Plot"
-  caption="Thermal resistance across the power sweep."
+  caption="Measured thermal resistance across the power sweep, calculated as (heater block temperature − mean of inlet and outlet coolant temperature) / heater power setpoint."
+  narrow
 />
 
-<span class="pending">Pending:</span> Per-condition values, the thermal resistance definition with thermocouple locations, and the raw logs will be published in the repository.
+<span class="pending">Pending:</span> Per-condition values, thermocouple locations, and the raw logs will be published in the repository.
 
 ## What the analysis caught
 
